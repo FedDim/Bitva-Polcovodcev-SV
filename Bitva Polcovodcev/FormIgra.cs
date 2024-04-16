@@ -19,8 +19,8 @@ namespace Bitva_Polcovodcev
             InitializeComponent();
         }
 
-        Bitmap bitKartaIgri = Properties.Resources.BitvaZaOstrov_Igroki_Tri;
-        Bitmap bitKartaTerritorii = Properties.Resources.BitvaZaOstrov_Provincii;
+        Bitmap bitKartaIgri = Properties.Resources.Proba_Igroki;
+        Bitmap bitKartaTerritorii = Properties.Resources.Proba_Territorii;
         int indexIgroka = 0;
         bool vivodRolei = false;
         Color cvetIgrok;
@@ -116,9 +116,9 @@ namespace Bitva_Polcovodcev
 
                     for (int ter = 0; ter < listClassTeritorii.Count; ter++)
                     {
-                        if (cvetKartiTerritorii == listClassTeritorii[ter].CvetTerritorii || (cvetKartiTerritorii.R == listClassTeritorii[ter].CvetTerritorii.R && cvetKartiTerritorii.G == listClassTeritorii[ter].CvetTerritorii.G && cvetKartiTerritorii.B == listClassTeritorii[ter].CvetTerritorii.B))
+                        if (cvetKartiTerritorii == listClassTeritorii[ter].Cvet || (cvetKartiTerritorii.R == listClassTeritorii[ter].Cvet.R && cvetKartiTerritorii.G == listClassTeritorii[ter].Cvet.G && cvetKartiTerritorii.B == listClassTeritorii[ter].Cvet.B))
                         {
-                            intNomerTerritoriiDlaProverki = listClassTeritorii[ter].IntNomer;
+                            intNomerTerritoriiDlaProverki = listClassTeritorii[ter].Nomer;
 
                             for (int terSosed = 0; terSosed < listClassTeritorii[ter].Sosedi.Length; terSosed++)
                             {
@@ -199,9 +199,9 @@ namespace Bitva_Polcovodcev
 
                                                 for (int territoriiSosedi = 0; territoriiSosedi < listClassIgrok[indexIgrokaPoteravshego].SosediTerritorii.Count; territoriiSosedi++)
                                                 {
-                                                    int indexTerritorii = listClassTeritorii.FindIndex(list => int.Equals(list.IntNomer, listClassIgrok[indexIgrokaPoteravshego].SosediTerritorii[territoriiSosedi]));
+                                                    int indexTerritorii = listClassTeritorii.FindIndex(list => int.Equals(list.Nomer, listClassIgrok[indexIgrokaPoteravshego].SosediTerritorii[territoriiSosedi]));
 
-                                                    EstLiTerritoriaVSostave = listClassIgrok[indexSoseda].PodkontrolnieTerritorii.Contains(listClassTeritorii[indexTerritorii].IntNomer);
+                                                    EstLiTerritoriaVSostave = listClassIgrok[indexSoseda].PodkontrolnieTerritorii.Contains(listClassTeritorii[indexTerritorii].Nomer);
 
                                                     if (EstLiTerritoriaVSostave) break;
                                                 }
@@ -235,13 +235,13 @@ namespace Bitva_Polcovodcev
 
                         //Отрисовка
 
-                        int RisovanieX = listClassTeritorii[intNomerTerritoriiDlaProverki].IntX;
+                        int RisovanieX = listClassTeritorii[intNomerTerritoriiDlaProverki].X;
 
-                        int RisovanieY = listClassTeritorii[intNomerTerritoriiDlaProverki].IntY;
+                        int RisovanieY = listClassTeritorii[intNomerTerritoriiDlaProverki].Y;
 
-                        int RisovaniWidth = listClassTeritorii[intNomerTerritoriiDlaProverki].IntWidth;
+                        int RisovaniWidth = listClassTeritorii[intNomerTerritoriiDlaProverki].Width;
 
-                        int RisovanieHeight = listClassTeritorii[intNomerTerritoriiDlaProverki].IntHeight;
+                        int RisovanieHeight = listClassTeritorii[intNomerTerritoriiDlaProverki].Height;
 
                         Bitmap BitTerritoria = new Bitmap(bitKartaTerritorii.Width, bitKartaTerritorii.Height);
 
@@ -251,7 +251,7 @@ namespace Bitva_Polcovodcev
                             {
                                 Color cvetPerekrass = bitKartaTerritorii.GetPixel(x, y);
 
-                                if (cvetPerekrass == listClassTeritorii[intNomerTerritoriiDlaProverki].CvetTerritorii || (cvetPerekrass.R == listClassTeritorii[intNomerTerritoriiDlaProverki].CvetTerritorii.R && cvetPerekrass.G == listClassTeritorii[intNomerTerritoriiDlaProverki].CvetTerritorii.G && cvetPerekrass.B == listClassTeritorii[intNomerTerritoriiDlaProverki].CvetTerritorii.B))
+                                if (cvetPerekrass == listClassTeritorii[intNomerTerritoriiDlaProverki].Cvet || (cvetPerekrass.R == listClassTeritorii[intNomerTerritoriiDlaProverki].Cvet.R && cvetPerekrass.G == listClassTeritorii[intNomerTerritoriiDlaProverki].Cvet.G && cvetPerekrass.B == listClassTeritorii[intNomerTerritoriiDlaProverki].Cvet.B))
                                 {
                                     BitTerritoria.SetPixel(x, y, cvetIgrok);
                                 }

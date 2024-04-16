@@ -48,13 +48,13 @@ namespace Bitva_Polcovodcev
 
         public void Deserelizacia_IgrokData(ref List<Igrok> listClassIgrok)
         {
-            var file = File.ReadAllText("IgrokData.json");
+            var file = File.ReadAllText("IgrokData_Proba.json");
             listClassIgrok = JsonConvert.DeserializeObject<List<Igrok>>(file);
         }
 
         public void Deserelizacia_TerritoriiData(ref List<Territorii> listClassTerritorii)
         {
-            var file = File.ReadAllText("TerritoriiData.json");
+            var file = File.ReadAllText("TerritoriiData_Proba.json");
             listClassTerritorii = JsonConvert.DeserializeObject<List<Territorii>>(file);
         }
     }

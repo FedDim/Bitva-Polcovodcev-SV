@@ -91,12 +91,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BitvaZaOstrov_Igroki_Tri.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\BitvaZaOstrov_Provincii.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Chest.png" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +111,11 @@
   <ItemGroup>
     <None Include="Resources\Tri.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Proba_Igroki.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Proba_Territorii.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -63,26 +63,6 @@ namespace Bitva_Polcovodcev.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BitvaZaOstrov_Igroki_Tri {
-            get {
-                object obj = ResourceManager.GetObject("BitvaZaOstrov_Igroki_Tri", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap BitvaZaOstrov_Provincii {
-            get {
-                object obj = ResourceManager.GetObject("BitvaZaOstrov_Provincii", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Chest {
             get {
                 object obj = ResourceManager.GetObject("Chest", resourceCulture);
@@ -136,6 +116,26 @@ namespace Bitva_Polcovodcev.Properties {
         internal static System.Drawing.Bitmap Piat {
             get {
                 object obj = ResourceManager.GetObject("Piat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Proba_Igroki {
+            get {
+                object obj = ResourceManager.GetObject("Proba_Igroki", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Proba_Territorii {
+            get {
+                object obj = ResourceManager.GetObject("Proba_Territorii", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

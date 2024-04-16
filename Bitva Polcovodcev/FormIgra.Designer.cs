@@ -32,8 +32,8 @@
             this.buttonHod = new System.Windows.Forms.Button();
             this.labelOD = new System.Windows.Forms.Label();
             this.buttonBrosok = new System.Windows.Forms.Button();
-            this.pictureBrosok = new System.Windows.Forms.PictureBox();
             this.labelNazvanie = new System.Windows.Forms.Label();
+            this.pictureBrosok = new System.Windows.Forms.PictureBox();
             this.pictureFlag = new System.Windows.Forms.PictureBox();
             this.pictureKarta = new System.Windows.Forms.PictureBox();
             this.panelInterfeis.SuspendLayout();
@@ -97,16 +97,6 @@
             this.buttonBrosok.UseVisualStyleBackColor = false;
             this.buttonBrosok.Click += new System.EventHandler(this.ButtonBrosok_Click);
             // 
-            // pictureBrosok
-            // 
-            this.pictureBrosok.Image = global::Bitva_Polcovodcev.Properties.Resources.Niet;
-            this.pictureBrosok.Location = new System.Drawing.Point(35, 218);
-            this.pictureBrosok.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBrosok.Name = "pictureBrosok";
-            this.pictureBrosok.Size = new System.Drawing.Size(152, 117);
-            this.pictureBrosok.TabIndex = 2;
-            this.pictureBrosok.TabStop = false;
-            // 
             // labelNazvanie
             // 
             this.labelNazvanie.AutoSize = true;
@@ -118,6 +108,16 @@
             this.labelNazvanie.Size = new System.Drawing.Size(80, 25);
             this.labelNazvanie.TabIndex = 1;
             this.labelNazvanie.Text = "label1";
+            // 
+            // pictureBrosok
+            // 
+            this.pictureBrosok.Image = global::Bitva_Polcovodcev.Properties.Resources.Niet;
+            this.pictureBrosok.Location = new System.Drawing.Point(35, 218);
+            this.pictureBrosok.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBrosok.Name = "pictureBrosok";
+            this.pictureBrosok.Size = new System.Drawing.Size(152, 117);
+            this.pictureBrosok.TabIndex = 2;
+            this.pictureBrosok.TabStop = false;
             // 
             // pictureFlag
             // 
@@ -131,7 +131,7 @@
             // 
             // pictureKarta
             // 
-            this.pictureKarta.Image = global::Bitva_Polcovodcev.Properties.Resources.BitvaZaOstrov_Igroki_Tri;
+            this.pictureKarta.Image = global::Bitva_Polcovodcev.Properties.Resources.Proba_Igroki;
             this.pictureKarta.Location = new System.Drawing.Point(0, 0);
             this.pictureKarta.Margin = new System.Windows.Forms.Padding(4);
             this.pictureKarta.Name = "pictureKarta";
@@ -152,7 +152,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormIgra";
-            this.Text = "Битва За Островъ";
+            this.Text = "Проба";
             this.Load += new System.EventHandler(this.FormIgra_Load);
             this.panelInterfeis.ResumeLayout(false);
             this.panelInterfeis.PerformLayout();
