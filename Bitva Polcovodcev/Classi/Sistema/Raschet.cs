@@ -159,6 +159,7 @@ namespace Bitva_Polcovodcev
             igroki[indexIgroka].PodkontrolnieTerritorii.Add(nomerTerritorii);
             igroki[indexIgroka].SosediTerritorii.Remove(nomerTerritorii);
 
+
             //Работа съ Соседями Территоріями
             for (int sosediZahvachennoiTerritorii = 0; sosediZahvachennoiTerritorii < territorii[nomerTerritorii].Sosedi.Length; sosediZahvachennoiTerritorii++)
             {
@@ -237,6 +238,14 @@ namespace Bitva_Polcovodcev
             else
             {
                 igroki[indexIgroka].SosediTerritorii.Clear();
+
+                for (int i = 0; i < igroki[indexIgroka].SosediIgroki.Count; i++)
+                {
+                    int indexSoseda = igroki.FindIndex(igrok => int.Equals(igrok.Nomer, igroki[indexIgroka].SosediIgroki[i]));
+
+                    if (igroki[indexSoseda].SosediIgroki.Contains(igroki[indexIgroka].Nomer)) igroki[indexSoseda].SosediIgroki.Remove(igroki[indexIgroka].Nomer);
+                }
+
                 igroki[indexIgroka].SosediIgroki.Clear();
                 igroki[indexIgroka].JivLi = false;
             }

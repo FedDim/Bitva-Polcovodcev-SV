@@ -135,8 +135,9 @@ namespace Bitva_Polcovodcev
                                             igroki[indexIgrokaPoteravshego].CenaZahvata -= dannie.cenaZahvataTerritorii;
                                         }
 
-                                        raschet.Rabota_S_Soseduami_U_Igroka_Poluchivshego(igroki, territorii, indexIgroka, nomerTerritoriiDlaProverki);
+                                        igroki[indexIgroka].SosediIgroki.Remove(igroki[indexIgrokaPoteravshego].Nomer);
 
+                                        raschet.Rabota_S_Soseduami_U_Igroka_Poluchivshego(igroki, territorii, indexIgroka, nomerTerritoriiDlaProverki);
 
                                         raschet.Rabota_S_Soseduami_U_Igroka_Poteriavsego(igroki, territorii, indexIgrokaPoteravshego, nomerTerritoriiDlaProverki);
 
