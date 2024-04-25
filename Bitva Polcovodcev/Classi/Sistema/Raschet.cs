@@ -159,7 +159,6 @@ namespace Bitva_Polcovodcev
             igroki[indexIgroka].PodkontrolnieTerritorii.Add(nomerTerritorii);
             igroki[indexIgroka].SosediTerritorii.Remove(nomerTerritorii);
 
-
             //Работа съ Соседями Территоріями
             for (int sosediZahvachennoiTerritorii = 0; sosediZahvachennoiTerritorii < territorii[nomerTerritorii].Sosedi.Length; sosediZahvachennoiTerritorii++)
             {
