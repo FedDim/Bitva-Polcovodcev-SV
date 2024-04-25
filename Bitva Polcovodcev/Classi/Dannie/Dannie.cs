@@ -31,7 +31,7 @@ namespace Bitva_Polcovodcev
         };
 
         //Въ будущемъ этотъ классъ долженъ хранить данныя о сценаріяхъ (Возможно станетъ частью класса Карта)
-        public string imaScenaria = "Битва За Островъ для трёхъ Игроковъ";
-        public int cenaZahvataKarti = 40;
+        public string imaScenaria = "Проба";
+        public int cenaZahvataKarti = 18;
     }
 }
