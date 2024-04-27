@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Bitva_Polcovodcev
 {
-    public class Dannie
+    public class Baza
     {
         //Цвѣта карты
         public Color granica = Color.FromArgb(255, 0, 0, 0);
@@ -31,7 +31,10 @@ namespace Bitva_Polcovodcev
         };
 
         //Въ будущемъ этотъ классъ долженъ хранить данныя о сценаріяхъ (Возможно станетъ частью класса Карта)
-        public string imaScenaria = "Проба";
-        public int cenaZahvataKarti = 18;
+        public String[,] scenarii = 
+        {
+            { "Проба", "18", "9", "5" },
+            { "Битва за Островъ", "40", "20", "7" },
+        };
     }
 }

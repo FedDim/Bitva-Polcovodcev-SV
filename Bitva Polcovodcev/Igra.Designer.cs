@@ -1,6 +1,6 @@
 ﻿namespace Bitva_Polcovodcev
 {
-    partial class FormIgra
+    partial class Igra
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Igra));
             this.panelInterfeis = new System.Windows.Forms.Panel();
             this.buttonHod = new System.Windows.Forms.Button();
             this.labelOD = new System.Windows.Forms.Label();
             this.buttonBrosok = new System.Windows.Forms.Button();
-            this.labelNazvanie = new System.Windows.Forms.Label();
             this.pictureBrosok = new System.Windows.Forms.PictureBox();
+            this.labelNazvanie = new System.Windows.Forms.Label();
             this.pictureFlag = new System.Windows.Forms.PictureBox();
             this.pictureKarta = new System.Windows.Forms.PictureBox();
             this.panelInterfeis.SuspendLayout();
@@ -97,6 +98,16 @@
             this.buttonBrosok.UseVisualStyleBackColor = false;
             this.buttonBrosok.Click += new System.EventHandler(this.ButtonBrosok_Click);
             // 
+            // pictureBrosok
+            // 
+            this.pictureBrosok.Image = global::Bitva_Polcovodcev.Properties.Resources.Niet;
+            this.pictureBrosok.Location = new System.Drawing.Point(35, 218);
+            this.pictureBrosok.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBrosok.Name = "pictureBrosok";
+            this.pictureBrosok.Size = new System.Drawing.Size(152, 117);
+            this.pictureBrosok.TabIndex = 2;
+            this.pictureBrosok.TabStop = false;
+            // 
             // labelNazvanie
             // 
             this.labelNazvanie.AutoSize = true;
@@ -108,16 +119,6 @@
             this.labelNazvanie.Size = new System.Drawing.Size(80, 25);
             this.labelNazvanie.TabIndex = 1;
             this.labelNazvanie.Text = "label1";
-            // 
-            // pictureBrosok
-            // 
-            this.pictureBrosok.Image = global::Bitva_Polcovodcev.Properties.Resources.Niet;
-            this.pictureBrosok.Location = new System.Drawing.Point(35, 218);
-            this.pictureBrosok.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBrosok.Name = "pictureBrosok";
-            this.pictureBrosok.Size = new System.Drawing.Size(152, 117);
-            this.pictureBrosok.TabIndex = 2;
-            this.pictureBrosok.TabStop = false;
             // 
             // pictureFlag
             // 
@@ -140,19 +141,20 @@
             this.pictureKarta.TabStop = false;
             this.pictureKarta.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureKarta_MouseDown);
             // 
-            // FormIgra
+            // Igra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.panelInterfeis);
             this.Controls.Add(this.pictureKarta);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormIgra";
-            this.Text = "Проба";
+            this.Name = "Igra";
+            this.Text = "Битва Поководцевъ";
             this.Load += new System.EventHandler(this.FormIgra_Load);
             this.panelInterfeis.ResumeLayout(false);
             this.panelInterfeis.PerformLayout();

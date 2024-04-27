@@ -9,7 +9,7 @@ namespace Bitva_Polcovodcev
 {
     public class Zagruzka
     {
-        Dannie dannie = new Dannie();
+        Baza dannie = new Baza();
 
         public void ZagruzkaElementovFormi(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form)
         {

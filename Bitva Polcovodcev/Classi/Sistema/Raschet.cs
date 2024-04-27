@@ -11,7 +11,7 @@ namespace Bitva_Polcovodcev
 {
     public class Raschet
     {
-        Dannie dannie = new Dannie();
+        Baza dannie = new Baza();
 
         public void SmenaIgroka(List<Igrok> listClassIgrok, ref int NomerIgroka, ref Label labelNazvanie, ref Label labelOD, ref PictureBox pictureFlag, ref PictureBox pictureBrosok, Button buttonBrosok, Button buttonHod, Panel panelInterfeis, ref Color IgrokCvet, bool boolZagruzca)
         {

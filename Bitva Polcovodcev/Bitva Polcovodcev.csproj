@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Значокъ.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -49,22 +52,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classi\Dannie\Dannie.cs" />
+    <Compile Include="Classi\Dannie\Baza.cs" />
     <Compile Include="Classi\Dannie\Igrok.cs" />
     <Compile Include="Classi\Dannie\Roli.cs" />
     <Compile Include="Classi\Dannie\Territorii.cs" />
     <Compile Include="Classi\Sistema\Raschet.cs" />
     <Compile Include="Classi\Sistema\Zagruzka.cs" />
-    <Compile Include="FormIgra.cs">
+    <Compile Include="Igra.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormIgra.Designer.cs">
-      <DependentUpon>FormIgra.cs</DependentUpon>
+    <Compile Include="Igra.Designer.cs">
+      <DependentUpon>Igra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NastroikaIgri.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NastroikaIgri.Designer.cs">
+      <DependentUpon>NastroikaIgri.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormIgra.resx">
-      <DependentUpon>FormIgra.cs</DependentUpon>
+    <Compile Include="ViborKarti.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViborKarti.Designer.cs">
+      <DependentUpon>ViborKarti.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Igra.resx">
+      <DependentUpon>Igra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NastroikaIgri.resx">
+      <DependentUpon>NastroikaIgri.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -76,6 +94,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ViborKarti.resx">
+      <DependentUpon>ViborKarti.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -116,6 +137,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Proba_Territorii.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BitvaZaOstrov_Igroki.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BitvaZaOstrov_Provincii.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Значокъ.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

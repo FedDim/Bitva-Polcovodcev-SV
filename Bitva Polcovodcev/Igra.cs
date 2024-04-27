@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace Bitva_Polcovodcev
 {
-    public partial class FormIgra : Form
+    public partial class Igra : Form
     {
-        public FormIgra()
+        public Igra()
         {
             InitializeComponent();
         }
@@ -26,7 +26,7 @@ namespace Bitva_Polcovodcev
         public List<Territorii> territorii = new List<Territorii>();
 
         Raschet raschet = new Raschet();
-        Dannie dannie = new Dannie();
+        Baza dannie = new Baza();
 
         public List<Roli> listClassRoli = new List<Roli>()
         {

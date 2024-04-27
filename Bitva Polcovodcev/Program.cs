@@ -16,7 +16,7 @@ namespace Bitva_Polcovodcev
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormIgra());
+            Application.Run(new ViborKarti());
         }
     }
 }
