@@ -30,18 +30,18 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViborKarti));
             this.karti = new System.Windows.Forms.Panel();
-            this.panelKarta = new System.Windows.Forms.Panel();
             this.vibor = new System.Windows.Forms.Button();
-            this.igrat = new System.Windows.Forms.Button();
-            this.kartinaKarta = new System.Windows.Forms.PictureBox();
-            this.nazvanie = new System.Windows.Forms.Label();
-            this.cenaZahvata = new System.Windows.Forms.Label();
-            this.kolichestvoTerritoriu = new System.Windows.Forms.Label();
+            this.karta = new System.Windows.Forms.Panel();
             this.kolichestvoIgrokov = new System.Windows.Forms.Label();
+            this.kolichestvoTerritorii = new System.Windows.Forms.Label();
+            this.cenaZahvata = new System.Windows.Forms.Label();
+            this.nazvanie = new System.Windows.Forms.Label();
+            this.kartina = new System.Windows.Forms.PictureBox();
+            this.kNastroikeIgrokov = new System.Windows.Forms.Button();
             this.kartiFon = new System.Windows.Forms.Panel();
             this.karti.SuspendLayout();
-            this.panelKarta.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kartinaKarta)).BeginInit();
+            this.karta.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kartina)).BeginInit();
             this.kartiFon.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,20 +54,6 @@
             this.karti.Name = "karti";
             this.karti.Size = new System.Drawing.Size(221, 549);
             this.karti.TabIndex = 0;
-            // 
-            // panelKarta
-            // 
-            this.panelKarta.BackColor = System.Drawing.Color.Silver;
-            this.panelKarta.Controls.Add(this.kolichestvoIgrokov);
-            this.panelKarta.Controls.Add(this.kolichestvoTerritoriu);
-            this.panelKarta.Controls.Add(this.cenaZahvata);
-            this.panelKarta.Controls.Add(this.nazvanie);
-            this.panelKarta.Controls.Add(this.kartinaKarta);
-            this.panelKarta.Controls.Add(this.igrat);
-            this.panelKarta.Location = new System.Drawing.Point(395, 0);
-            this.panelKarta.Name = "panelKarta";
-            this.panelKarta.Size = new System.Drawing.Size(520, 439);
-            this.panelKarta.TabIndex = 1;
             // 
             // vibor
             // 
@@ -82,40 +68,43 @@
             this.vibor.Tag = "0";
             this.vibor.Text = "button1";
             this.vibor.UseVisualStyleBackColor = false;
+            this.vibor.Click += new System.EventHandler(this.vibor_Click);
             // 
-            // igrat
+            // karta
             // 
-            this.igrat.BackColor = System.Drawing.Color.DimGray;
-            this.igrat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.igrat.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.igrat.ForeColor = System.Drawing.Color.Yellow;
-            this.igrat.Location = new System.Drawing.Point(372, 350);
-            this.igrat.Name = "igrat";
-            this.igrat.Size = new System.Drawing.Size(145, 86);
-            this.igrat.TabIndex = 0;
-            this.igrat.Text = "button1";
-            this.igrat.UseVisualStyleBackColor = false;
+            this.karta.BackColor = System.Drawing.Color.Gray;
+            this.karta.Controls.Add(this.kolichestvoIgrokov);
+            this.karta.Controls.Add(this.kolichestvoTerritorii);
+            this.karta.Controls.Add(this.cenaZahvata);
+            this.karta.Controls.Add(this.nazvanie);
+            this.karta.Controls.Add(this.kartina);
+            this.karta.Controls.Add(this.kNastroikeIgrokov);
+            this.karta.Location = new System.Drawing.Point(395, 0);
+            this.karta.Name = "karta";
+            this.karta.Size = new System.Drawing.Size(520, 439);
+            this.karta.TabIndex = 1;
             // 
-            // kartinaKarta
+            // kolichestvoIgrokov
             // 
-            this.kartinaKarta.Image = global::Bitva_Polcovodcev.Properties.Resources.BitvaZaOstrov_Provincii;
-            this.kartinaKarta.Location = new System.Drawing.Point(3, 4);
-            this.kartinaKarta.Name = "kartinaKarta";
-            this.kartinaKarta.Size = new System.Drawing.Size(514, 329);
-            this.kartinaKarta.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.kartinaKarta.TabIndex = 1;
-            this.kartinaKarta.TabStop = false;
+            this.kolichestvoIgrokov.AutoSize = true;
+            this.kolichestvoIgrokov.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.kolichestvoIgrokov.ForeColor = System.Drawing.Color.Yellow;
+            this.kolichestvoIgrokov.Location = new System.Drawing.Point(3, 408);
+            this.kolichestvoIgrokov.Name = "kolichestvoIgrokov";
+            this.kolichestvoIgrokov.Size = new System.Drawing.Size(321, 24);
+            this.kolichestvoIgrokov.TabIndex = 5;
+            this.kolichestvoIgrokov.Text = "Количество Возможных Игроковъ";
             // 
-            // nazvanie
+            // kolichestvoTerritorii
             // 
-            this.nazvanie.AutoSize = true;
-            this.nazvanie.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nazvanie.ForeColor = System.Drawing.Color.Yellow;
-            this.nazvanie.Location = new System.Drawing.Point(3, 336);
-            this.nazvanie.Name = "nazvanie";
-            this.nazvanie.Size = new System.Drawing.Size(81, 24);
-            this.nazvanie.TabIndex = 2;
-            this.nazvanie.Text = "Наваніе";
+            this.kolichestvoTerritorii.AutoSize = true;
+            this.kolichestvoTerritorii.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.kolichestvoTerritorii.ForeColor = System.Drawing.Color.Yellow;
+            this.kolichestvoTerritorii.Location = new System.Drawing.Point(3, 384);
+            this.kolichestvoTerritorii.Name = "kolichestvoTerritorii";
+            this.kolichestvoTerritorii.Size = new System.Drawing.Size(230, 24);
+            this.kolichestvoTerritorii.TabIndex = 4;
+            this.kolichestvoTerritorii.Text = "Количество Территорій";
             // 
             // cenaZahvata
             // 
@@ -128,27 +117,40 @@
             this.cenaZahvata.TabIndex = 3;
             this.cenaZahvata.Text = "Цѣна Захвата";
             // 
-            // kolichestvoTerritoriu
+            // nazvanie
             // 
-            this.kolichestvoTerritoriu.AutoSize = true;
-            this.kolichestvoTerritoriu.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.kolichestvoTerritoriu.ForeColor = System.Drawing.Color.Yellow;
-            this.kolichestvoTerritoriu.Location = new System.Drawing.Point(3, 384);
-            this.kolichestvoTerritoriu.Name = "kolichestvoTerritoriu";
-            this.kolichestvoTerritoriu.Size = new System.Drawing.Size(230, 24);
-            this.kolichestvoTerritoriu.TabIndex = 4;
-            this.kolichestvoTerritoriu.Text = "Количество Территорій";
+            this.nazvanie.AutoSize = true;
+            this.nazvanie.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.nazvanie.ForeColor = System.Drawing.Color.Yellow;
+            this.nazvanie.Location = new System.Drawing.Point(3, 336);
+            this.nazvanie.Name = "nazvanie";
+            this.nazvanie.Size = new System.Drawing.Size(81, 24);
+            this.nazvanie.TabIndex = 2;
+            this.nazvanie.Text = "Наваніе";
             // 
-            // kolichestvoIgrokov
+            // kartina
             // 
-            this.kolichestvoIgrokov.AutoSize = true;
-            this.kolichestvoIgrokov.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.kolichestvoIgrokov.ForeColor = System.Drawing.Color.Yellow;
-            this.kolichestvoIgrokov.Location = new System.Drawing.Point(3, 408);
-            this.kolichestvoIgrokov.Name = "kolichestvoIgrokov";
-            this.kolichestvoIgrokov.Size = new System.Drawing.Size(321, 24);
-            this.kolichestvoIgrokov.TabIndex = 5;
-            this.kolichestvoIgrokov.Text = "Количество Возможных Игроковъ";
+            this.kartina.Image = global::Bitva_Polcovodcev.Properties.Resources.BitvaZaOstrov_Provincii;
+            this.kartina.Location = new System.Drawing.Point(3, 4);
+            this.kartina.Name = "kartina";
+            this.kartina.Size = new System.Drawing.Size(514, 329);
+            this.kartina.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.kartina.TabIndex = 1;
+            this.kartina.TabStop = false;
+            // 
+            // kNastroikeIgrokov
+            // 
+            this.kNastroikeIgrokov.BackColor = System.Drawing.Color.DimGray;
+            this.kNastroikeIgrokov.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.kNastroikeIgrokov.Font = new System.Drawing.Font("Calibri", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.kNastroikeIgrokov.ForeColor = System.Drawing.Color.Yellow;
+            this.kNastroikeIgrokov.Location = new System.Drawing.Point(367, 336);
+            this.kNastroikeIgrokov.Name = "kNastroikeIgrokov";
+            this.kNastroikeIgrokov.Size = new System.Drawing.Size(150, 100);
+            this.kNastroikeIgrokov.TabIndex = 0;
+            this.kNastroikeIgrokov.Text = "Къ Настроке Игроковъ";
+            this.kNastroikeIgrokov.UseVisualStyleBackColor = false;
+            this.kNastroikeIgrokov.Click += new System.EventHandler(this.kNastroikeIgrokov_Click);
             // 
             // kartiFon
             // 
@@ -167,18 +169,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(937, 450);
             this.Controls.Add(this.kartiFon);
-            this.Controls.Add(this.panelKarta);
+            this.Controls.Add(this.karta);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ViborKarti";
-            this.Text = "Битва Полководцевъ";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Выборъ Карты";
             this.Load += new System.EventHandler(this.ViborKarti_Load);
             this.karti.ResumeLayout(false);
-            this.panelKarta.ResumeLayout(false);
-            this.panelKarta.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kartinaKarta)).EndInit();
+            this.karta.ResumeLayout(false);
+            this.karta.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kartina)).EndInit();
             this.kartiFon.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -187,12 +190,12 @@
         #endregion
 
         private System.Windows.Forms.Panel karti;
-        private System.Windows.Forms.Panel panelKarta;
+        private System.Windows.Forms.Panel karta;
         private System.Windows.Forms.Button vibor;
-        private System.Windows.Forms.PictureBox kartinaKarta;
-        private System.Windows.Forms.Button igrat;
+        private System.Windows.Forms.PictureBox kartina;
+        private System.Windows.Forms.Button kNastroikeIgrokov;
         private System.Windows.Forms.Label nazvanie;
-        private System.Windows.Forms.Label kolichestvoTerritoriu;
+        private System.Windows.Forms.Label kolichestvoTerritorii;
         private System.Windows.Forms.Label cenaZahvata;
         private System.Windows.Forms.Label kolichestvoIgrokov;
         private System.Windows.Forms.Panel kartiFon;

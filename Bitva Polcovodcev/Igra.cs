@@ -26,7 +26,7 @@ namespace Bitva_Polcovodcev
         public List<Territorii> territorii = new List<Territorii>();
 
         Raschet raschet = new Raschet();
-        Baza dannie = new Baza();
+        Baza baza = new Baza();
 
         public List<Roli> listClassRoli = new List<Roli>()
         {
@@ -41,7 +41,7 @@ namespace Bitva_Polcovodcev
         {
             Zagruzka zagruzka = new Zagruzka();
 
-            zagruzka.ZagruzkaElementovFormi(pictureKarta, bitKartaIgri, panelInterfeis, this);
+            zagruzka.ZagruzkaElementovFormiIgra(pictureKarta, bitKartaIgri, panelInterfeis, this);
             zagruzka.ZagruzkaElementovFormiDlaIgroka(pictureFlag, pictureBrosok, labelNazvanie, labelOD, buttonBrosok, buttonHod, panelInterfeis);
 
             zagruzka.Deserelizacia_IgrokData(ref igroki);
@@ -98,14 +98,14 @@ namespace Bitva_Polcovodcev
         {
             Color cvetIgrovoiKarti = bitKartaIgri.GetPixel(e.X, e.Y);
 
-            if (cvetIgrovoiKarti != dannie.granica && cvetIgrovoiKarti != dannie.gori && cvetIgrovoiKarti != dannie.more)
+            if (cvetIgrovoiKarti != baza.granica && cvetIgrovoiKarti != baza.gori && cvetIgrovoiKarti != baza.more)
             {
                 if (cvetIgrovoiKarti == cvetIgrok || (cvetIgrovoiKarti.R == cvetIgrok.R && cvetIgrovoiKarti.G == cvetIgrok.G && cvetIgrovoiKarti.B == cvetIgrok.B)) MessageBox.Show(igroki[indexIgroka].UpravlenieTerritorii);
                 else
                 {
                     //Въ будущем можно будетъ прописать if для разныхъ типовъ территорій
 
-                    bool boolODdlaTerritorii = igroki[indexIgroka].KolicestvoOD >= dannie.cenaZahvataTerritorii;
+                    bool boolODdlaTerritorii = igroki[indexIgroka].KolicestvoOD >= baza.cenaZahvataTerritorii;
                     bool boolSvaziEst = false;
                     int nomerTerritoriiDlaProverki = 0;
 
@@ -130,9 +130,9 @@ namespace Bitva_Polcovodcev
 
                                         if (boolODdlaTerritorii)
                                         {
-                                            igroki[indexIgroka].KolicestvoOD -= dannie.cenaZahvataTerritorii;
-                                            igroki[indexIgroka].CenaZahvata += dannie.cenaZahvataTerritorii;
-                                            igroki[indexIgrokaPoteravshego].CenaZahvata -= dannie.cenaZahvataTerritorii;
+                                            igroki[indexIgroka].KolicestvoOD -= baza.cenaZahvataTerritorii;
+                                            igroki[indexIgroka].CenaZahvata += baza.cenaZahvataTerritorii;
+                                            igroki[indexIgrokaPoteravshego].CenaZahvata -= baza.cenaZahvataTerritorii;
                                         }
 
                                         igroki[indexIgroka].SosediIgroki.Remove(igroki[indexIgrokaPoteravshego].Nomer);
@@ -144,7 +144,7 @@ namespace Bitva_Polcovodcev
                                         //Работа съ данными Соседа
 
                                     }
-                                    else if (!boolODdlaTerritorii) MessageBox.Show(dannie.MaloOD);
+                                    else if (!boolODdlaTerritorii) MessageBox.Show(baza.MaloOD);
 
                                     break;
                                 }
@@ -184,7 +184,7 @@ namespace Bitva_Polcovodcev
                                 }
                                 else
                                 {
-                                    BitTerritoria.SetPixel(x, y, dannie.pustota);
+                                    BitTerritoria.SetPixel(x, y, baza.pustota);
                                 }
                             }
                         }
@@ -221,7 +221,7 @@ namespace Bitva_Polcovodcev
                     igroki[i].Rol = listClassRoli[0].Ima;
                     if (!listClassRoli[0].Igroki.Contains(igroki[i].Nomer)) listClassRoli[0].Igroki.Add(igroki[i].Nomer);
 
-                    if (igroki[i].Tip != dannie.tip[0]) MessageBox.Show("Страна подъ названіемъ: " + igroki[i].Ima + " перестала существовать");
+                    if (igroki[i].Tip != baza.tip[0]) MessageBox.Show("Страна подъ названіемъ: " + igroki[i].Ima + " перестала существовать");
                 }
             }
 
@@ -247,8 +247,8 @@ namespace Bitva_Polcovodcev
 
         private void ButtonHod_Click(object sender, EventArgs e)
         {
-            if (igroki[indexIgroka].CenaZahvata == dannie.cenaZahvataKarti) MessageBox.Show("Политія: " + igroki[indexIgroka].Ima + " одержала побѣду. " + igroki[indexIgroka].TekstPobedi);
-            else raschet.SmenaIgroka(igroki, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgrok, false);
+            //if (igroki[indexIgroka].CenaZahvata == baza.cenaZahvataKarti) MessageBox.Show("Политія: " + igroki[indexIgroka].Ima + " одержала побѣду. " + igroki[indexIgroka].TekstPobedi);
+            //else raschet.SmenaIgroka(igroki, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgrok, false);
         }
 
         private void FormirovanieOtvetaRoliDlaNegegemona(ref string roli, List<int> spisok)

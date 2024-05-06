@@ -1,5 +1,6 @@
 ﻿using Bitva_Polcovodcev.Classi.Dannie;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -9,9 +10,9 @@ namespace Bitva_Polcovodcev
 {
     public class Zagruzka
     {
-        Baza dannie = new Baza();
+        Baza baza = new Baza();
 
-        public void ZagruzkaElementovFormi(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form)
+        public void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form)
         {
             pictureKarta.Height = BitKartaIgri.Height;
             pictureKarta.Width = BitKartaIgri.Width;
@@ -22,7 +23,7 @@ namespace Bitva_Polcovodcev
             form.Height = pictureKarta.Height + 38;
             form.Width = pictureKarta.Width + panelInterfeis.Width + 16;
 
-            form.Text = dannie.imaScenaria;
+            form.Text = baza.scenarii[0, 0];
         }
 
         public void ZagruzkaElementovFormiDlaIgroka(PictureBox pictureFlag, PictureBox pictureBrosok, Label labelNazvanie, Label labelOD, Button buttonBrosok, Button buttonHod, Panel panelInterfeis)
