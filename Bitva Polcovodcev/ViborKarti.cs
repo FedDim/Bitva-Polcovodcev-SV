@@ -19,22 +19,21 @@ namespace Bitva_Polcovodcev
 
         Button[] vibori;
         Baza baza = new Baza();
-        public int nomerScenaria;
+        public int indexScenaria;
+        NastroikaIgri nastroikaIgri;
 
         private void ViborKarti_Load(object sender, EventArgs e)
         {
-            Zagruzka zagruzka = new Zagruzka();
-
-            zagruzkaElementovFormiViborKarti(this, vibor, ref vibori, karti, kartiFon, karta);
+            ZagruzkaElementovFormiViborKarti(this, vibor, ref vibori, karti, kartiFon, karta);
 
         }
 
-        public void vibor_Click(object sender, EventArgs e)
+        public void Vibor_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            nomerScenaria = Convert.ToInt32(btn.Tag);
+            indexScenaria = Convert.ToInt32(btn.Tag);
 
-            switch (nomerScenaria)
+            switch (indexScenaria)
             {
                 case 0:
                     kartina.Image = Properties.Resources.Proba_Igroki;
@@ -44,17 +43,16 @@ namespace Bitva_Polcovodcev
                     break;
             }
 
-            nazvanie.Text = "Названіе: " + baza.scenarii[nomerScenaria, 0];
-            cenaZahvata.Text = "Цѣна Захвата: " + baza.scenarii[nomerScenaria, 1];
-            kolichestvoTerritorii.Text = "Количество Территорій: " + baza.scenarii[nomerScenaria, 2];
-            kolichestvoIgrokov.Text = "Количество Возможных Игроковъ: " + baza.scenarii[nomerScenaria, 3];
+            nazvanie.Text = "Названіе: " + baza.scenarii[indexScenaria, 0];
+            cenaZahvata.Text = "Цѣна Захвата: " + baza.scenarii[indexScenaria, 1];
+            kolichestvoTerritorii.Text = "Количество Территорій: " + baza.scenarii[indexScenaria, 2];
+            kolichestvoIgrokov.Text = "Количество Возможных Игроковъ: " + baza.scenarii[indexScenaria, 3];
 
             if (karta.Visible == false) karta.Visible = true;
         }
 
-        public void zagruzkaElementovFormiViborKarti(Form form, Button vibor, ref Button[] vibori, Panel karti, Panel kartiFon, Panel karta)
+        public void ZagruzkaElementovFormiViborKarti(Form form, Button vibor, ref Button[] vibori, Panel karti, Panel kartiFon, Panel karta)
         {
-            //ViborKarti viborKarti = new ViborKarti();
 
             vibor.Height = 75;
             vibor.Width = 120;
@@ -83,7 +81,7 @@ namespace Bitva_Polcovodcev
                     Location = new Point(vibori[i - 1].Location.X, 5 + vibori[i - 1].Height),
                     Tag = i
                 };
-                vibori[i].Click += new System.EventHandler(vibor_Click);
+                vibori[i].Click += new System.EventHandler(Vibor_Click);
                 vibori[i].BringToFront();
                 karti.Controls.Add(vibori[i]);
             }
@@ -98,9 +96,16 @@ namespace Bitva_Polcovodcev
             form.Size = new Size(karta.Location.X + karta.Width + 16, karta.Height + 40);
         }
 
-        private void kNastroikeIgrokov_Click(object sender, EventArgs e)
+        private void KNastroikeIgrokov_Click(object sender, EventArgs e)
         {
-
+            nastroikaIgri = new NastroikaIgri
+            {
+                Location = new Point(this.Location.X, this.Location.Y),
+                indexScenaria = this.indexScenaria
+            };
+            this.Visible = false;
+            nastroikaIgri.ShowDialog();
+            this.Dispose();
         }
     }
 }

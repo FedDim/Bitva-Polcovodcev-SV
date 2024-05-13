@@ -18,6 +18,7 @@ namespace Bitva_Polcovodcev
 
         Bitmap bitKartaIgri = Properties.Resources.Proba_Igroki;
         Bitmap bitKartaTerritorii = Properties.Resources.Proba_Territorii;
+        public int indexScenaria;
         int indexIgroka = 0;
         bool vivodRolei = false, vivodSvazei = true;
         Color cvetIgrok;
@@ -44,8 +45,8 @@ namespace Bitva_Polcovodcev
             zagruzka.ZagruzkaElementovFormiIgra(pictureKarta, bitKartaIgri, panelInterfeis, this);
             zagruzka.ZagruzkaElementovFormiDlaIgroka(pictureFlag, pictureBrosok, labelNazvanie, labelOD, buttonBrosok, buttonHod, panelInterfeis);
 
-            zagruzka.Deserelizacia_IgrokData(ref igroki);
-            zagruzka.Deserelizacia_TerritoriiData(ref territorii);
+            //zagruzka.Deserelizacia_IgrokData(ref igroki);
+            //zagruzka.Deserelizacia_TerritoriiData(ref territorii);
 
             raschet.Raspredelenie_Rolei(listClassRoli, igroki);
             raschet.SmenaIgroka(igroki, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgrok, true);

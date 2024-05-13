@@ -1,6 +1,4 @@
-﻿using Bitva_Polcovodcev.Classi.Dannie;
-using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -47,16 +45,53 @@ namespace Bitva_Polcovodcev
             buttonHod.Location = new Point(0, labelOD.Location.Y + labelOD.Height + 5);
         }
 
-        public void Deserelizacia_IgrokData(ref List<Igrok> listClassIgrok)
+        public void Deserelizacia_IgrokData(ref List<Igrok> igroki, string nazvanie)
         {
-            var file = File.ReadAllText("IgrokData_Proba.json");
-            listClassIgrok = JsonConvert.DeserializeObject<List<Igrok>>(file);
+            try
+            {
+                igroki = JsonConvert.DeserializeObject<List<Igrok>>(File.ReadAllText(nazvanie));
+            }
+            catch
+            {
+                MessageBox.Show("Файлъ: " + nazvanie + " не обнаруженъ");
+            }
         }
 
-        public void Deserelizacia_TerritoriiData(ref List<Territorii> listClassTerritorii)
+        public void Deserelizacia_TerritoriiData(ref List<Territorii> territorii, string nazvanie)
         {
-            var file = File.ReadAllText("TerritoriiData_Proba.json");
-            listClassTerritorii = JsonConvert.DeserializeObject<List<Territorii>>(file);
+            try
+            {
+                territorii = JsonConvert.DeserializeObject<List<Territorii>>(File.ReadAllText(nazvanie));
+            }
+            catch
+            {
+                MessageBox.Show("Файлъ: "+ nazvanie + " не обнаруженъ" );
+            }
+        }
+
+        public void Sohranenie_IgrokData(List<Igrok> igroki, string nazvanie)
+        {
+            try
+            {
+                File.WriteAllText(nazvanie, JsonConvert.SerializeObject(igroki));
+                MessageBox.Show("Данные сохранены");
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка: " + nazvanie);
+            }
+        }
+
+        public void Sohranenie_IgrokTerritorii(List<Territorii> territorii, string nazvanie)
+        {
+            try
+            {
+                File.WriteAllText(nazvanie, JsonConvert.SerializeObject(territorii));
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка: " + nazvanie);
+            }
         }
     }
 }

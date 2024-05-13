@@ -68,7 +68,7 @@
             this.vibor.Tag = "0";
             this.vibor.Text = "button1";
             this.vibor.UseVisualStyleBackColor = false;
-            this.vibor.Click += new System.EventHandler(this.vibor_Click);
+            this.vibor.Click += new System.EventHandler(this.Vibor_Click);
             // 
             // karta
             // 
@@ -150,7 +150,7 @@
             this.kNastroikeIgrokov.TabIndex = 0;
             this.kNastroikeIgrokov.Text = "Къ Настроке Игроковъ";
             this.kNastroikeIgrokov.UseVisualStyleBackColor = false;
-            this.kNastroikeIgrokov.Click += new System.EventHandler(this.kNastroikeIgrokov_Click);
+            this.kNastroikeIgrokov.Click += new System.EventHandler(this.KNastroikeIgrokov_Click);
             // 
             // kartiFon
             // 
