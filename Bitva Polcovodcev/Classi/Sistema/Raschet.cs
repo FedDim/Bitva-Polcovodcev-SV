@@ -211,6 +211,9 @@ namespace Bitva_Polcovodcev
                 }
 
                 //Работа съ Соседями Игроками
+
+                List<int> spisokBivsihSosedeiIgrokov = new List<int>();
+
                 for (int ninesnieSosedi = 0; ninesnieSosedi < igroki[indexIgroka].SosediIgroki.Count; ninesnieSosedi++)
                 {
                     int indexSoseda = igroki.FindIndex(list => int.Equals(list.Nomer, igroki[indexIgroka].SosediIgroki[ninesnieSosedi]));
@@ -228,11 +231,17 @@ namespace Bitva_Polcovodcev
 
                     if (!estLiTerritoriaVSostave)
                     {
-                        igroki[indexIgroka].SosediIgroki.Remove(igroki[indexSoseda].Nomer);
-                        igroki[indexSoseda].SosediIgroki.Remove(igroki[indexIgroka].Nomer);
+                        spisokBivsihSosedeiIgrokov.Add(igroki[indexIgroka].SosediIgroki[ninesnieSosedi]);
                     }
 
                 }
+
+                for (int bivshiSosedIgrok = 0; bivshiSosedIgrok < spisokBivsihSosedeiIgrokov.Count; bivshiSosedIgrok++)
+                {
+                    igroki[indexIgroka].SosediIgroki.Remove(spisokBivsihSosedeiIgrokov[bivshiSosedIgrok]);
+                    igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, spisokBivsihSosedeiIgrokov[bivshiSosedIgrok]))].SosediIgroki.Remove(igroki[indexIgroka].Nomer);
+                }
+
             }
             else
             {
