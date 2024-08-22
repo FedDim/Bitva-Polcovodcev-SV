@@ -11,7 +11,6 @@ namespace Bitva_Polcovodcev
         public bool JivLi { get; set; }
         public string Ima { get; set; }
         public string Tip { get; set; }
-        public string Rol { get; set; }
         public string UpravlenieTerritorii { get; set; }
         public string TekstPobedi { get; set; }
         public Color Cvet { get; set; }

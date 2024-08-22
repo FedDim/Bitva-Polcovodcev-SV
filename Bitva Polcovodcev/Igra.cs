@@ -1,5 +1,4 @@
-﻿using Bitva_Polcovodcev.Classi.Dannie;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -20,7 +19,7 @@ namespace Bitva_Polcovodcev
         Bitmap bitKartaTerritorii = Properties.Resources.Proba_Territorii;
         public int indexScenaria;
         int indexIgroka = 0;
-        bool vivodRolei = false, vivodSvazei = true;
+        bool vivodSvazei = true;
         Color cvetIgrok;
 
         public List<Igrok> igroki = new List<Igrok>();
@@ -28,15 +27,6 @@ namespace Bitva_Polcovodcev
 
         Raschet raschet = new Raschet();
         Baza baza = new Baza();
-
-        public List<Roli> listClassRoli = new List<Roli>()
-        {
-            new Roli() { Ima = "Нулевой Игрокъ", Igroki = new List<int>() },
-            new Roli() { Ima = "Гегемонъ", Igroki = new List<int>() },
-            new Roli() { Ima = "Соперникъ", Igroki = new List<int>() },
-            new Roli() { Ima = "Середнякъ", Igroki = new List<int>() },
-            new Roli() { Ima = "Изгой", Igroki = new List<int>() }
-        };
 
         private void FormIgra_Load(object sender, EventArgs e)
         {
@@ -48,7 +38,6 @@ namespace Bitva_Polcovodcev
             //zagruzka.Deserelizacia_IgrokData(ref igroki);
             //zagruzka.Deserelizacia_TerritoriiData(ref territorii);
 
-            raschet.Raspredelenie_Rolei(listClassRoli, igroki);
             raschet.SmenaIgroka(igroki, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgrok, true);
         }
 
@@ -155,14 +144,10 @@ namespace Bitva_Polcovodcev
                         }
                     }
 
-                    if (boolSvaziEst) //Отрисовка и Работа съ Ролями
+                    if (boolSvaziEst) //Отрисовка
                     {
-                        //Работа съ Ролями
-
-                        raschet.Raspredelenie_Rolei(listClassRoli, igroki);
 
                         //Отрисовка
-
                         int RisovanieX = territorii[nomerTerritoriiDlaProverki].X;
 
                         int RisovanieY = territorii[nomerTerritoriiDlaProverki].Y;
@@ -219,27 +204,9 @@ namespace Bitva_Polcovodcev
                 if (igroki[i].CenaZahvata == 0 && igroki[i].JivLi)
                 {
                     igroki[i].JivLi = false;
-                    igroki[i].Rol = listClassRoli[0].Ima;
-                    if (!listClassRoli[0].Igroki.Contains(igroki[i].Nomer)) listClassRoli[0].Igroki.Add(igroki[i].Nomer);
 
                     if (igroki[i].Tip != baza.tip[0]) MessageBox.Show("Страна подъ названіемъ: " + igroki[i].Ima + " перестала существовать");
                 }
-            }
-
-            if (vivodRolei)
-            {
-                string roli = "Нулевой Игрокъ: ";
-                FormirovanieOtvetaRoliDlaNegegemona(ref roli, listClassRoli[0].Igroki);
-                roli += "\nГегемонъ: ";
-                if (listClassRoli[1].Igroki.Count != 0) roli += igroki[igroki.FindIndex(list => int.Equals(list.Nomer, listClassRoli[1].Igroki[0]))].Ima;
-                else roli += "Отсутствуетъ";
-                roli += "\nПротивникъ: ";
-                FormirovanieOtvetaRoliDlaNegegemona(ref roli, listClassRoli[2].Igroki);
-                roli += "\nСереднякъ: ";
-                FormirovanieOtvetaRoliDlaNegegemona(ref roli, listClassRoli[3].Igroki);
-                roli += "\nИзгой: ";
-                FormirovanieOtvetaRoliDlaNegegemona(ref roli, listClassRoli[4].Igroki);
-                MessageBox.Show(roli, "Роли");
             }
 
             if (vivodSvazei) MessageBox.Show(VivodSvazei(igroki));
@@ -250,20 +217,6 @@ namespace Bitva_Polcovodcev
         {
             //if (igroki[indexIgroka].CenaZahvata == baza.cenaZahvataKarti) MessageBox.Show("Политія: " + igroki[indexIgroka].Ima + " одержала побѣду. " + igroki[indexIgroka].TekstPobedi);
             //else raschet.SmenaIgroka(igroki, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgrok, false);
-        }
-
-        private void FormirovanieOtvetaRoliDlaNegegemona(ref string roli, List<int> spisok)
-        {
-            if (spisok.Count > 0)
-            {
-                for (int i = 0; i < spisok.Count; i++)
-                {
-                    roli += igroki[igroki.FindIndex(list => int.Equals(list.Nomer, spisok[i]))].Ima;
-                    if (i < spisok.Count - 1) roli += ", ";
-                }
-
-            }
-            else roli += "Отсутствуетъ";
         }
 
         private String VivodSvazei(List<Igrok> igroki)

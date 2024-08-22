@@ -1,5 +1,4 @@
-﻿using Bitva_Polcovodcev.Classi.Dannie;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -56,102 +55,6 @@ namespace Bitva_Polcovodcev
             buttonHod.Enabled = false;
 
             IgrokCvet = listClassIgrok[NomerIgroka].Cvet;
-        }
-
-        public void Raspredelenie_Rolei(List<Roli> listClassRoli, List<Igrok> listClassIgrok)
-        {
-            for (int i = 0; i < listClassIgrok.Count; i++)
-            {
-                //if (listClassRoli[0].Igroki.Contains(listClassIgrok[i].Nomer) && listClassRoli[4].Igroki.Contains(listClassIgrok[i].Nomer)) listClassRoli[4].Igroki.Remove(listClassIgrok[i].Nomer);
-
-                if (listClassIgrok[i].Tip != dannie.tip[0])
-                {
-                    //Работа съ Гегемономъ
-                    if (listClassRoli[1].Igroki.Count == 0)
-                    {
-                        listClassIgrok[i].Rol = listClassRoli[1].Ima;
-                        listClassRoli[1].Igroki.Add(listClassIgrok[i].Nomer);
-                    }
-                    else if (listClassIgrok[i].CenaZahvata > listClassIgrok[listClassIgrok.FindIndex(list => int.Equals(list.Nomer, listClassRoli[1].Igroki[0]))].CenaZahvata)
-                    {
-                        int nomerProslogoGegemona = listClassRoli[1].Igroki[0];
-                        listClassRoli[1].Igroki[0] = listClassIgrok[i].Nomer;
-                        listClassRoli[2].Igroki.Remove(listClassIgrok[i].Nomer);
-                        listClassIgrok[i].Rol = listClassRoli[1].Ima;
-
-                        i = listClassIgrok.FindIndex(list => int.Equals(list.Nomer, nomerProslogoGegemona));
-                        listClassIgrok[i].Rol = listClassRoli[2].Ima;
-                    }
-
-                    if (listClassIgrok[i].Rol == listClassRoli[1].Ima) continue;
-
-                    int indexGegemona = listClassIgrok.FindIndex(list => int.Equals(list.Nomer, listClassRoli[1].Igroki[0]));
-
-                    //Работа съ Соперникомъ
-                    if (listClassIgrok[i].CenaZahvata <= listClassIgrok[indexGegemona].CenaZahvata && listClassIgrok[i].CenaZahvata >= listClassIgrok[indexGegemona].CenaZahvata - listClassIgrok[indexGegemona].CenaZahvata / 10 && !listClassRoli[2].Igroki.Contains(listClassIgrok[i].Nomer))
-                    {
-                        listClassIgrok[i].Rol = listClassRoli[2].Ima;
-                        listClassRoli[2].Igroki.Add(listClassIgrok[i].Nomer);
-                    }
-                    else if (listClassIgrok[i].CenaZahvata <= listClassIgrok[indexGegemona].CenaZahvata - listClassIgrok[indexGegemona].CenaZahvata / 10 && listClassRoli[2].Igroki.Contains(listClassIgrok[i].Nomer)) listClassRoli[2].Igroki.Remove(listClassIgrok[i].Nomer);
-
-                    //Работа съ Середнякомъ
-                    if (listClassIgrok[i].CenaZahvata < listClassIgrok[indexGegemona].CenaZahvata - listClassIgrok[indexGegemona].CenaZahvata / 10 && listClassIgrok[i].CenaZahvata > listClassIgrok[indexGegemona].CenaZahvata / 10 && !listClassRoli[3].Igroki.Contains(listClassIgrok[i].Nomer))
-                    {
-                        listClassIgrok[i].Rol = listClassRoli[3].Ima;
-                        listClassRoli[3].Igroki.Add(listClassIgrok[i].Nomer);
-                    }
-                    else if ((listClassIgrok[i].CenaZahvata <= listClassIgrok[indexGegemona].CenaZahvata / 10 || listClassIgrok[i].CenaZahvata >= listClassIgrok[indexGegemona].CenaZahvata - listClassIgrok[indexGegemona].CenaZahvata / 10) && listClassRoli[3].Igroki.Contains(listClassIgrok[i].Nomer)) listClassRoli[3].Igroki.Remove(listClassIgrok[i].Nomer);
-
-                    //Работа съ Изгоемъ
-                    if (listClassIgrok[i].CenaZahvata <= listClassIgrok[indexGegemona].CenaZahvata / 10 && listClassIgrok[i].CenaZahvata > 0 && !listClassRoli[4].Igroki.Contains(listClassIgrok[i].Nomer))
-                    {
-                        listClassIgrok[i].Rol = listClassRoli[4].Ima;
-                        listClassRoli[4].Igroki.Add(listClassIgrok[i].Nomer);
-                    }
-                    else if ((listClassIgrok[i].CenaZahvata > listClassIgrok[indexGegemona].CenaZahvata / 10 || listClassIgrok[i].CenaZahvata < 0) && listClassRoli[4].Igroki.Contains(listClassIgrok[i].Nomer)) listClassRoli[4].Igroki.Remove(listClassIgrok[i].Nomer);
-                }
-                else if (!listClassRoli[0].Igroki.Contains(listClassIgrok[i].Nomer)) listClassRoli[0].Igroki.Add(listClassIgrok[i].Nomer);
-            }
-
-            Sortirovka_Spiskov_Rolei(listClassRoli, listClassIgrok);
-        }
-
-        public void Sortirovka_Spiskov_Rolei(List<Roli> listClassRoli, List<Igrok> listClassIgrok)
-        {
-            int nomerElementa = 0;
-            if (listClassRoli[2].Igroki.Count > 1)
-            {
-                var sortirovkaKonkurenta = listClassRoli[2].Igroki.OrderByDescending(nomer => listClassIgrok[listClassIgrok.FindIndex(spisok => int.Equals(spisok.Nomer, nomer))].CenaZahvata);
-                foreach (var i in sortirovkaKonkurenta)
-                {
-                    listClassRoli[2].Igroki[nomerElementa] = i;
-                    nomerElementa++;
-                }
-            }
-
-            nomerElementa = 0;
-            if (listClassRoli[3].Igroki.Count > 1)
-            {
-                var sortirovkaSerednauk = listClassRoli[3].Igroki.OrderByDescending(nomer => listClassIgrok[listClassIgrok.FindIndex(spisok => int.Equals(spisok.Nomer, nomer))].CenaZahvata);
-                foreach (var i in sortirovkaSerednauk)
-                {
-                    listClassRoli[3].Igroki[nomerElementa] = i;
-                    nomerElementa++;
-                }
-            }
-
-            nomerElementa = 0;
-            if (listClassRoli[4].Igroki.Count > 1)
-            {
-                var sortirovkaIzgoi = listClassRoli[4].Igroki.OrderByDescending(nomer => listClassIgrok[listClassIgrok.FindIndex(spisok => int.Equals(spisok.Nomer, nomer))].CenaZahvata);
-                foreach (var i in sortirovkaIzgoi)
-                {
-                    listClassRoli[4].Igroki[nomerElementa] = i;
-                    nomerElementa++;
-                }
-            }
-
         }
 
         public void Rabota_S_Soseduami_U_Igroka_Poluchivshego(List<Igrok> igroki, List<Territorii> territorii, int indexIgroka, int nomerTerritorii)

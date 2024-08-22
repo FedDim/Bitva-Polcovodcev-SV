@@ -54,7 +54,6 @@
   <ItemGroup>
     <Compile Include="Classi\Dannie\Baza.cs" />
     <Compile Include="Classi\Dannie\Igrok.cs" />
-    <Compile Include="Classi\Dannie\Roli.cs" />
     <Compile Include="Classi\Dannie\Territorii.cs" />
     <Compile Include="Classi\Sistema\Raschet.cs" />
     <Compile Include="Classi\Sistema\Zagruzka.cs" />
