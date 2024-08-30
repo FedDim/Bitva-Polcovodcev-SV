@@ -73,9 +73,9 @@ namespace Bitva_Polcovodcev.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BitvaZaOstrov_Provincii {
+        internal static System.Drawing.Bitmap BitvaZaOstrov_Territorii {
             get {
-                object obj = ResourceManager.GetObject("BitvaZaOstrov_Provincii", resourceCulture);
+                object obj = ResourceManager.GetObject("BitvaZaOstrov_Territorii", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -132,7 +132,6 @@
             // 
             // pictureKarta
             // 
-            this.pictureKarta.Image = global::Bitva_Polcovodcev.Properties.Resources.Proba_Igroki;
             this.pictureKarta.Location = new System.Drawing.Point(0, 0);
             this.pictureKarta.Margin = new System.Windows.Forms.Padding(4);
             this.pictureKarta.Name = "pictureKarta";
@@ -154,6 +153,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Igra";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Битва Поководцевъ";
             this.Load += new System.EventHandler(this.FormIgra_Load);
             this.panelInterfeis.ResumeLayout(false);

@@ -10,10 +10,12 @@ namespace Bitva_Polcovodcev
     {
         Baza baza = new Baza();
 
-        public void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form)
+        public void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form, int indexScenaria)
         {
             pictureKarta.Height = BitKartaIgri.Height;
             pictureKarta.Width = BitKartaIgri.Width;
+
+            pictureKarta.Image = BitKartaIgri;
 
             panelInterfeis.Location = new Point(pictureKarta.Width, 0);
             panelInterfeis.Height = BitKartaIgri.Height;
@@ -21,7 +23,7 @@ namespace Bitva_Polcovodcev
             form.Height = pictureKarta.Height + 38;
             form.Width = pictureKarta.Width + panelInterfeis.Width + 16;
 
-            form.Text = baza.scenarii[0, 0];
+            form.Text = baza.scenarii[indexScenaria, 0];
         }
 
         public void ZagruzkaElementovFormiDlaIgroka(PictureBox pictureFlag, PictureBox pictureBrosok, Label labelNazvanie, Label labelOD, Button buttonBrosok, Button buttonHod, Panel panelInterfeis)
@@ -91,6 +93,24 @@ namespace Bitva_Polcovodcev
             catch
             {
                 MessageBox.Show("Ошибка: " + nazvanie);
+            }
+        }
+
+        public void ZagruzkaBitmapKart(int indexScenaria, ref Bitmap kartaIgrokov, ref Bitmap kartaTerritorii)
+        {
+            switch (indexScenaria)
+            {
+                case 0:
+                    kartaIgrokov = Properties.Resources.Proba_Igroki;
+                    kartaTerritorii = Properties.Resources.Proba_Territorii;
+                    break;
+                case 1:
+                    kartaIgrokov = Properties.Resources.BitvaZaOstrov_Igroki;
+                    kartaTerritorii = Properties.Resources.BitvaZaOstrov_Territorii;
+                    break;
+                default:
+
+                    break;
             }
         }
     }

@@ -148,7 +148,7 @@
   <data name="BitvaZaOstrov_Igroki" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BitvaZaOstrov_Igroki.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BitvaZaOstrov_Provincii" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="BitvaZaOstrov_Territorii" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BitvaZaOstrov_Provincii.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bitva_Polcovodcev.Classi.Sistema;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -15,14 +16,14 @@ namespace Bitva_Polcovodcev
             InitializeComponent();
         }
 
-        Bitmap bitKartaIgri = Properties.Resources.Proba_Igroki;
-        Bitmap bitKartaTerritorii = Properties.Resources.Proba_Territorii;
+        Bitmap bitKartaIgri, bitKartaTerritorii;
         public int indexScenaria;
-        int indexIgroka = 0;
-        bool vivodSvazei = true;
-        Color cvetIgrok;
+        int indexIgroka = 0, hod = 0;
+        bool vivodSvazei = false;
+        Color cvetIgroka;
 
         public List<Igrok> igroki = new List<Igrok>();
+        public List<Igrok> igrokiVneIgri = new List<Igrok>();
         public List<Territorii> territorii = new List<Territorii>();
 
         Raschet raschet = new Raschet();
@@ -32,13 +33,15 @@ namespace Bitva_Polcovodcev
         {
             Zagruzka zagruzka = new Zagruzka();
 
-            zagruzka.ZagruzkaElementovFormiIgra(pictureKarta, bitKartaIgri, panelInterfeis, this);
+            zagruzka.ZagruzkaBitmapKart(indexScenaria, ref bitKartaIgri, ref bitKartaTerritorii);
+
+            zagruzka.ZagruzkaElementovFormiIgra(pictureKarta, bitKartaIgri, panelInterfeis, this, indexScenaria);
             zagruzka.ZagruzkaElementovFormiDlaIgroka(pictureFlag, pictureBrosok, labelNazvanie, labelOD, buttonBrosok, buttonHod, panelInterfeis);
 
-            //zagruzka.Deserelizacia_IgrokData(ref igroki);
-            //zagruzka.Deserelizacia_TerritoriiData(ref territorii);
+            zagruzka.Deserelizacia_IgrokData(ref igroki, baza.scenarii[indexScenaria, 4]);
+            zagruzka.Deserelizacia_TerritoriiData(ref territorii, baza.scenarii[indexScenaria, 5]);
 
-            raschet.SmenaIgroka(igroki, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgrok, true);
+            raschet.SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, true, indexScenaria, bitKartaTerritorii, ref bitKartaIgri);
         }
 
         private void ButtonBrosok_Click(object sender, EventArgs e)
@@ -90,7 +93,7 @@ namespace Bitva_Polcovodcev
 
             if (cvetIgrovoiKarti != baza.granica && cvetIgrovoiKarti != baza.gori && cvetIgrovoiKarti != baza.more)
             {
-                if (cvetIgrovoiKarti == cvetIgrok || (cvetIgrovoiKarti.R == cvetIgrok.R && cvetIgrovoiKarti.G == cvetIgrok.G && cvetIgrovoiKarti.B == cvetIgrok.B)) MessageBox.Show(igroki[indexIgroka].UpravlenieTerritorii);
+                if (cvetIgrovoiKarti == cvetIgroka || (cvetIgrovoiKarti.R == cvetIgroka.R && cvetIgrovoiKarti.G == cvetIgroka.G && cvetIgrovoiKarti.B == cvetIgroka.B)) MessageBox.Show(igroki[indexIgroka].UpravlenieTerritorii);
                 else
                 {
                     //Въ будущем можно будетъ прописать if для разныхъ типовъ территорій
@@ -116,22 +119,7 @@ namespace Bitva_Polcovodcev
                                     {
                                         boolSvaziEst = true;
 
-                                        int indexIgrokaPoteravshego = igroki.FindIndex(list => list.PodkontrolnieTerritorii.Contains(nomerTerritoriiDlaProverki) && list.Nomer != igroki[indexIgroka].Nomer);
-
-                                        if (boolODdlaTerritorii)
-                                        {
-                                            igroki[indexIgroka].KolicestvoOD -= baza.cenaZahvataTerritorii;
-                                            igroki[indexIgroka].CenaZahvata += baza.cenaZahvataTerritorii;
-                                            igroki[indexIgrokaPoteravshego].CenaZahvata -= baza.cenaZahvataTerritorii;
-                                        }
-
-                                        igroki[indexIgroka].SosediIgroki.Remove(igroki[indexIgrokaPoteravshego].Nomer);
-
-                                        raschet.Rabota_S_Soseduami_U_Igroka_Poluchivshego(igroki, territorii, indexIgroka, nomerTerritoriiDlaProverki);
-
-                                        raschet.Rabota_S_Soseduami_U_Igroka_Poteriavsego(igroki, territorii, indexIgrokaPoteravshego, nomerTerritoriiDlaProverki);
-
-                                        //Работа съ данными Соседа
+                                        raschet.Pocrass(igroki, igrokiVneIgri, territorii, indexIgroka, nomerTerritoriiDlaProverki);
 
                                     }
                                     else if (!boolODdlaTerritorii) MessageBox.Show(baza.MaloOD);
@@ -144,56 +132,12 @@ namespace Bitva_Polcovodcev
                         }
                     }
 
-                    if (boolSvaziEst) //Отрисовка
+                    if (boolSvaziEst) 
                     {
+                        Grafika grafika = new Grafika();
 
-                        //Отрисовка
-                        int RisovanieX = territorii[nomerTerritoriiDlaProverki].X;
-
-                        int RisovanieY = territorii[nomerTerritoriiDlaProverki].Y;
-
-                        int RisovaniWidth = territorii[nomerTerritoriiDlaProverki].Width;
-
-                        int RisovanieHeight = territorii[nomerTerritoriiDlaProverki].Height;
-
-                        Bitmap BitTerritoria = new Bitmap(bitKartaTerritorii.Width, bitKartaTerritorii.Height);
-
-                        for (int y = RisovanieY; y < RisovanieHeight; y++)
-                        {
-                            for (int x = RisovanieX; x < RisovaniWidth; x++)
-                            {
-                                Color cvetPerekrass = bitKartaTerritorii.GetPixel(x, y);
-
-                                if (cvetPerekrass == territorii[nomerTerritoriiDlaProverki].Cvet || (cvetPerekrass.R == territorii[nomerTerritoriiDlaProverki].Cvet.R && cvetPerekrass.G == territorii[nomerTerritoriiDlaProverki].Cvet.G && cvetPerekrass.B == territorii[nomerTerritoriiDlaProverki].Cvet.B))
-                                {
-                                    BitTerritoria.SetPixel(x, y, cvetIgrok);
-                                }
-                                else
-                                {
-                                    BitTerritoria.SetPixel(x, y, baza.pustota);
-                                }
-                            }
-                        }
-
-                        labelOD.Text = "ОД " + igroki[indexIgroka].KolicestvoOD;
-                        labelOD.Location = new Point(panelInterfeis.Width / 2 - labelOD.Width / 2, labelOD.Location.Y);
-
-                        Bitmap bitKartaNovusIgri = new Bitmap(bitKartaIgri);
-                        Graphics grapNovusIgra = Graphics.FromImage(bitKartaNovusIgri);
-                        grapNovusIgra.CompositingMode = CompositingMode.SourceOver;
-
-                        grapNovusIgra.DrawImage(BitTerritoria, 0, 0);
-
-                        bitKartaIgri = bitKartaNovusIgri;
-
-                        Bitmap bitFinal = new Bitmap(bitKartaIgri);
-
-                        Graphics grapFinal = Graphics.FromImage(bitFinal);
-                        grapFinal.CompositingMode = CompositingMode.SourceOver;
-
-                        grapFinal.DrawImage(bitKartaIgri, 0, 0);
-
-                        pictureKarta.Image = bitFinal;
+                        grafika.Otrisovka(igroki, territorii, bitKartaTerritorii, ref bitKartaIgri, nomerTerritoriiDlaProverki, indexIgroka, pictureKarta, labelOD, panelInterfeis);
+                        
                     }
                 }
 
@@ -215,8 +159,8 @@ namespace Bitva_Polcovodcev
 
         private void ButtonHod_Click(object sender, EventArgs e)
         {
-            //if (igroki[indexIgroka].CenaZahvata == baza.cenaZahvataKarti) MessageBox.Show("Политія: " + igroki[indexIgroka].Ima + " одержала побѣду. " + igroki[indexIgroka].TekstPobedi);
-            //else raschet.SmenaIgroka(igroki, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgrok, false);
+            if (igroki[indexIgroka].CenaZahvata == int.Parse(baza.scenarii[indexScenaria, 1])) MessageBox.Show("Политія: " + igroki[indexIgroka].Ima + " одержала побѣду. " + igroki[indexIgroka].TekstPobedi);
+            else raschet.SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, false, indexScenaria, bitKartaTerritorii, ref bitKartaIgri);
         }
 
         private String VivodSvazei(List<Igrok> igroki)

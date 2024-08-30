@@ -33,8 +33,8 @@ namespace Bitva_Polcovodcev
         //Въ будущемъ этотъ классъ долженъ хранить данныя о сценаріяхъ (Возможно станетъ частью класса Карта)
         public String[,] scenarii = 
         {
-            { "Проба", "18", "9", "5" },
-            { "Битва за Островъ", "40", "20", "7" }
+            { "Проба", "18", "9", "5", "IgrokData_Proba.json", "TerritoriiData_Proba.json" },
+            { "Битва за Островъ", "40", "20", "7", "IgrokData_BitvaZaOstrov.json", "TerritoriiData_BitvaZaOstrov.json" }
         };
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bitva_Polcovodcev.Classi.Sistema;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,51 +11,43 @@ namespace Bitva_Polcovodcev
 {
     public class Raschet
     {
-        Baza dannie = new Baza();
+        Baza baza = new Baza();
 
-        public void SmenaIgroka(List<Igrok> listClassIgrok, ref int NomerIgroka, ref Label labelNazvanie, ref Label labelOD, ref PictureBox pictureFlag, ref PictureBox pictureBrosok, Button buttonBrosok, Button buttonHod, Panel panelInterfeis, ref Color IgrokCvet, bool boolZagruzca)
+        public void SmenaIgroka(List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgroka, ref Label labelNazvanie, ref Label labelOD, ref PictureBox pictureFlag, ref PictureBox pictureBrosok, PictureBox pictureKarta, Button buttonBrosok, Button buttonHod, Panel panelInterfeis, ref Color cvetIgroka, bool zagruzka, int indexScenaria, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri)
         {
-            if (!boolZagruzca)
+            IP ip = new IP();
+
+            if (!zagruzka || igroki[indexIgroka].Tip == baza.tip[0])
             {
-                if (NomerIgroka < listClassIgrok.Count - 1) NomerIgroka++;
-                else
+                while (true)
                 {
-                    if (listClassIgrok[0].Tip != dannie.tip[0]) NomerIgroka = 0;
-                    else NomerIgroka = 1;
+                    if (indexIgroka < igroki.Count - 1) indexIgroka++;
+                    else indexIgroka = 0;
+
+                    if (igroki[indexIgroka].JivLi && igroki[indexIgroka].Tip != baza.tip[0]) break;
                 }
+
             }
 
-            //Пока нѣтъ ИП его ходъ будетъ пропускатся
-            while (listClassIgrok[NomerIgroka].Tip == dannie.tip[2])
+            if (igroki[indexIgroka].Tip == baza.tip[2])
             {
-                if (NomerIgroka < listClassIgrok.Count - 1) NomerIgroka++;
-                else
-                {
-                    if (listClassIgrok[0].Tip != dannie.tip[0]) NomerIgroka = 0;
-                    else NomerIgroka = 1;
-                }
+                ip.Hod(ref igroki, igrokiVneIgri, territorii, indexIgroka, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, cvetIgroka, pictureKarta, labelOD, panelInterfeis);
             }
 
-            while (!listClassIgrok[NomerIgroka].JivLi || listClassIgrok[NomerIgroka].Tip == dannie.tip[0])
-            {
-                if (NomerIgroka < listClassIgrok.Count - 1) NomerIgroka++;
-                else
-                {
-                    if (listClassIgrok[0].Tip != dannie.tip[0]) NomerIgroka = 0;
-                    else NomerIgroka = 1;
-                }
-            }
-
-            pictureFlag.BackColor = listClassIgrok[NomerIgroka].Cvet;//Пока такъ, дальше догружать флагъ
-            labelNazvanie.Text = listClassIgrok[NomerIgroka].Ima;
+            pictureFlag.BackColor = igroki[indexIgroka].Cvet;//Пока такъ, дальше догружать флагъ
+            labelNazvanie.Text = igroki[indexIgroka].Ima;
             labelNazvanie.Location = new Point(panelInterfeis.Width / 2 - labelNazvanie.Width / 2, pictureFlag.Height + 5);
-            labelOD.Text = "ОД " + listClassIgrok[NomerIgroka].KolicestvoOD;
+            labelOD.Text = "ОД " + igroki[indexIgroka].KolicestvoOD;
             labelOD.Location = new Point(panelInterfeis.Width / 2 - labelOD.Width / 2, buttonBrosok.Location.Y + buttonBrosok.Height + 5);
             pictureBrosok.Image = Properties.Resources.Niet;
-            buttonBrosok.Enabled = true;
-            buttonHod.Enabled = false;
 
-            IgrokCvet = listClassIgrok[NomerIgroka].Cvet;
+            if (igroki[indexIgroka].Tip == baza.tip[1])
+            {
+                buttonBrosok.Enabled = true;
+                buttonHod.Enabled = false;
+            }
+
+            cvetIgroka = igroki[indexIgroka].Cvet;
         }
 
         public void Rabota_S_Soseduami_U_Igroka_Poluchivshego(List<Igrok> igroki, List<Territorii> territorii, int indexIgroka, int nomerTerritorii)
@@ -160,6 +153,26 @@ namespace Bitva_Polcovodcev
                 igroki[indexIgroka].SosediIgroki.Clear();
                 igroki[indexIgroka].JivLi = false;
             }
+        }
+
+        public void Pocrass(List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, int indexIgrok, int nomerTerritoriiPoteri)
+        {
+            Proverka proverka = new Proverka();
+
+            int indexIgrokaPoteravshego = igroki.FindIndex(list => list.PodkontrolnieTerritorii.Contains(nomerTerritoriiPoteri) && list.Nomer != igroki[indexIgrok].Nomer);
+
+            igroki[indexIgrok].KolicestvoOD -= baza.cenaZahvataTerritorii;
+            igroki[indexIgrok].CenaZahvata += baza.cenaZahvataTerritorii;
+            igroki[indexIgrokaPoteravshego].CenaZahvata -= baza.cenaZahvataTerritorii;
+
+            igroki[indexIgrok].SosediIgroki.Remove(igroki[indexIgrokaPoteravshego].Nomer);
+
+            Rabota_S_Soseduami_U_Igroka_Poluchivshego(igroki, territorii, indexIgrok, nomerTerritoriiPoteri);
+
+            Rabota_S_Soseduami_U_Igroka_Poteriavsego(igroki, territorii, indexIgrokaPoteravshego, nomerTerritoriiPoteri);
+
+            proverka.ProverkaNaSushestvovaniePolitii(igroki, igrokiVneIgri);
+
         }
     }
 }

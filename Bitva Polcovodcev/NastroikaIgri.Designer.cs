@@ -59,7 +59,7 @@
             this.igrat.TabIndex = 0;
             this.igrat.Text = "Играть";
             this.igrat.UseVisualStyleBackColor = false;
-            this.igrat.Click += new System.EventHandler(this.igrat_Click);
+            this.igrat.Click += new System.EventHandler(this.Igrat_Click);
             // 
             // sohranitIzmenenia
             // 

@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Bitva_Polcovodcev
@@ -25,12 +20,13 @@ namespace Bitva_Polcovodcev
         bool dannieShozi = true, dannieSohraneni = false;
         Igra igra;
         Zagruzka zagruzka = new Zagruzka();
+        Baza baza = new Baza();
 
         private void NastroikaIgri_Load(object sender, EventArgs e)
         {
-            zagruzka.Deserelizacia_IgrokData(ref igroki, Nazvanie(indexScenaria));
+            zagruzka.Deserelizacia_IgrokData(ref igroki, baza.scenarii[indexScenaria, 4]);
 
-            zagruzka.Deserelizacia_IgrokData(ref igrokiDlaRedactirovania, Nazvanie(indexScenaria));
+            zagruzka.Deserelizacia_IgrokData(ref igrokiDlaRedactirovania, baza.scenarii[indexScenaria, 4]);
 
             ZagruzkaElementovFormiNastroikiIgri();
         }
@@ -288,7 +284,7 @@ namespace Bitva_Polcovodcev
             primenitIzmenenia.Enabled = false;
         }
 
-        private void igrat_Click(object sender, EventArgs e)
+        private void Igrat_Click(object sender, EventArgs e)
         {
             if (primenitIzmenenia.Enabled)
             {
@@ -311,21 +307,8 @@ namespace Bitva_Polcovodcev
 
         private void SohranitIzmenenia_Click(object sender, EventArgs e)
         {
-            zagruzka.Sohranenie_IgrokData(igrokiDlaRedactirovania, Nazvanie(indexScenaria));
+            zagruzka.Sohranenie_IgrokData(igrokiDlaRedactirovania, baza.scenarii[indexScenaria, 4]);
             sohranitIzmenenia.Enabled = false;
-        }
-
-        public string Nazvanie(int indexKarti)
-        {
-            switch (indexKarti)
-            {
-                case 0:
-                    return "IgrokData_Proba.json";
-                case 1:
-                    return "IgrokData_BitvaZaOstrov.json";
-                default:
-                    return "Карта отсутствуетъ";
-            }
         }
     }
 }

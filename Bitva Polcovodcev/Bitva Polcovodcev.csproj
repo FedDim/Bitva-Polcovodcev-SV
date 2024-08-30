@@ -55,6 +55,9 @@
     <Compile Include="Classi\Dannie\Baza.cs" />
     <Compile Include="Classi\Dannie\Igrok.cs" />
     <Compile Include="Classi\Dannie\Territorii.cs" />
+    <Compile Include="Classi\Sistema\Grafika.cs" />
+    <Compile Include="Classi\Sistema\IP.cs" />
+    <Compile Include="Classi\Sistema\Proverka.cs" />
     <Compile Include="Classi\Sistema\Raschet.cs" />
     <Compile Include="Classi\Sistema\Zagruzka.cs" />
     <Compile Include="Igra.cs">

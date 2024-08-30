@@ -130,7 +130,7 @@
             // 
             // kartina
             // 
-            this.kartina.Image = global::Bitva_Polcovodcev.Properties.Resources.BitvaZaOstrov_Provincii;
+            this.kartina.Image = global::Bitva_Polcovodcev.Properties.Resources.BitvaZaOstrov_Territorii;
             this.kartina.Location = new System.Drawing.Point(3, 4);
             this.kartina.Name = "kartina";
             this.kartina.Size = new System.Drawing.Size(514, 329);
