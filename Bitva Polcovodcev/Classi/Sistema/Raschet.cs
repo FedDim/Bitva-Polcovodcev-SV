@@ -14,55 +14,31 @@ namespace Bitva_Polcovodcev
         {
             IP ip = new IP();
 
-            if (!zagruzka || igroki[indexIgroka].Tip == baza.tip[0])
+            if(!zagruzka && igroki[indexIgroka].Tip != baza.tip[0])
             {
                 while (true)
                 {
                     if (indexIgroka < igroki.Count - 1) indexIgroka++;
-                    else
-                    {
-
-                        List<int> politiiVneIgri = new List<int>();
-
-                        for (int i = 0; i < igroki.Count; i++)
-                        {
-                            if (igroki[i].CenaZahvata == 0 && !igroki[i].JivLi)
-                            {
-                                politiiVneIgri.Add(igroki[i].Nomer);
-
-                            }
-                        }
-
-                        for (int i = 0; i < politiiVneIgri.Count; i++)
-                        {
-                            int indexIgrokaVneIgri = igroki.FindIndex(igrok => int.Equals(igrok.Nomer, politiiVneIgri[i]));
-
-                            igrokiVneIgri.Add(igroki[indexIgrokaVneIgri]);
-                            igroki.Remove(igroki[indexIgrokaVneIgri]);
-                        }
-
-                        indexIgroka = 0;
-                    }
+                    else indexIgroka = 0;
 
                     if (igroki[indexIgroka].JivLi && igroki[indexIgroka].Tip != baza.tip[0]) break;
                 }
-
             }
 
             if (igroki[indexIgroka].Tip == baza.tip[2])
             {
                 ip.Hod(ref igroki, igrokiVneIgri, territorii, indexIgroka, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, cvetIgroka, pictureKarta, labelOD, panelInterfeis);
+                SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, false, indexScenaria, bitKartaTerritorii, ref bitKartaIgri);
             }
-
-            pictureFlag.BackColor = igroki[indexIgroka].Cvet;//Пока такъ, дальше догружать флагъ
-            labelNazvanie.Text = igroki[indexIgroka].Ima;
-            labelNazvanie.Location = new Point(panelInterfeis.Width / 2 - labelNazvanie.Width / 2, pictureFlag.Height + 5);
-            labelOD.Text = "ОД " + igroki[indexIgroka].KolicestvoOD;
-            labelOD.Location = new Point(panelInterfeis.Width / 2 - labelOD.Width / 2, buttonBrosok.Location.Y + buttonBrosok.Height + 5);
-            pictureBrosok.Image = Properties.Resources.Niet;
 
             if (igroki[indexIgroka].Tip == baza.tip[1])
             {
+                pictureFlag.BackColor = igroki[indexIgroka].Cvet;//Пока такъ, дальше догружать флагъ
+                labelNazvanie.Text = igroki[indexIgroka].Ima;
+                labelNazvanie.Location = new Point(panelInterfeis.Width / 2 - labelNazvanie.Width / 2, pictureFlag.Height + 5);
+                labelOD.Text = "ОД " + igroki[indexIgroka].KolicestvoOD;
+                labelOD.Location = new Point(panelInterfeis.Width / 2 - labelOD.Width / 2, buttonBrosok.Location.Y + buttonBrosok.Height + 5);
+                pictureBrosok.Image = Properties.Resources.Niet;
                 buttonBrosok.Enabled = true;
                 buttonHod.Enabled = false;
             }
