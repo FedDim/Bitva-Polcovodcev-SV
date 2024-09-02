@@ -119,7 +119,7 @@ namespace Bitva_Polcovodcev
                                     {
                                         boolSvaziEst = true;
 
-                                        raschet.Pocrass(igroki, igrokiVneIgri, territorii, indexIgroka, nomerTerritoriiDlaProverki);
+                                        raschet.Pocrass(igroki, igrokiVneIgri, territorii, ref indexIgroka, nomerTerritoriiDlaProverki);
 
                                     }
                                     else if (!boolODdlaTerritorii) MessageBox.Show(baza.MaloOD);

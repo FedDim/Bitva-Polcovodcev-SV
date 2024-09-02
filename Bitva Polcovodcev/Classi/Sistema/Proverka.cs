@@ -17,30 +17,16 @@ namespace Bitva_Polcovodcev.Classi.Sistema
 
         }
 
-        public void ProverkaNaSushestvovaniePolitii(List<Igrok> igroki, List<Igrok> igrokiVneIgri)
+        public void ProverkaPolojeniaIndexaIgroka(List<Igrok> igroki, ref int indexIgroka, int nomerIgroka)
         {
-            Baza baza = new Baza();
-
-            List<int> politiiVneIgri = new List<int>();
-
-            for (int i = 0; i < igroki.Count; i++)
+            for(int i = 0; i < igroki.Count; i++)
             {
-                if (igroki[i].CenaZahvata == 0 && igroki[i].JivLi)
+                if (igroki[i].Nomer == nomerIgroka)
                 {
-                    igroki[i].JivLi = false;
-                    politiiVneIgri.Add(igroki[i].Nomer);
-
+                    indexIgroka = i;
+                    break;
                 }
             }
-
-            for (int i = 0; i < politiiVneIgri.Count; i++)
-            {
-                int indexIgrokaVneIgri = igroki.FindIndex(igrok => int.Equals(igrok.Nomer, politiiVneIgri[i]));
-
-                igrokiVneIgri.Add(igroki[indexIgrokaVneIgri]);
-                igroki.Remove(igroki[indexIgrokaVneIgri]);
-            }
-
         }
     }
 }

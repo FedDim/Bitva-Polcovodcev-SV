@@ -9,7 +9,6 @@ namespace Bitva_Polcovodcev.Classi.Sistema
     {
         Random rnd = new Random();
         Baza baza = new Baza();
-        Proverka proverka = new Proverka();
         List<int> territoriiDlaZahvata = new List<int>();
 
         public void Hod(ref List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, int indexIgroka, int indexScenaria, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri, Color cvetIgroka, PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
@@ -52,7 +51,7 @@ namespace Bitva_Polcovodcev.Classi.Sistema
                 nomerTerritoriiPoteri = territoriiDlaZahvata[0];
             }
 
-            raschet.Pocrass(igroki, igrokiVneIgri, territorii, indexIgrok, nomerTerritoriiPoteri);
+            raschet.Pocrass(igroki, igrokiVneIgri, territorii, ref indexIgrok, nomerTerritoriiPoteri);
 
             grafika.Otrisovka(igroki, territorii, bitKartaTerritorii, ref bitKartaIgri, nomerTerritoriiPoteri, indexIgroka, pictureKarta, labelOD, panelInterfeis);
 
@@ -61,6 +60,8 @@ namespace Bitva_Polcovodcev.Classi.Sistema
 
         public void Logika(List<Igrok> igroki, int indexIgrok)
         {
+            Proverka proverka = new Proverka();
+
             List<int> sosedi = new List<int>();
             int naibolsaiaCenaZahvata = 0;
 

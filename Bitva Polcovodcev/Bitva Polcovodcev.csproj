@@ -99,6 +99,11 @@
     <EmbeddedResource Include="ViborKarti.resx">
       <DependentUpon>ViborKarti.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="bin\Debug\Bitva Polcovodcev.exe.config" />
+    <None Include="bin\Debug\IgrokData_BitvaZaOstrov.json" />
+    <None Include="bin\Debug\IgrokData_Proba.json" />
+    <None Include="bin\Debug\TerritoriiData_BitvaZaOstrov.json" />
+    <None Include="bin\Debug\TerritoriiData_Proba.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -147,7 +152,14 @@
     <None Include="Resources\BitvaZaOstrov_Provincii.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\Bitva Polcovodcev.exe" />
+    <Content Include="bin\Debug\Bitva Polcovodcev.pdb" />
+    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
     <Content Include="Значокъ.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
