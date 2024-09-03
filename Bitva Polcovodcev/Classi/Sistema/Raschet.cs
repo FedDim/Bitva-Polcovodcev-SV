@@ -27,8 +27,8 @@ namespace Bitva_Polcovodcev
 
             if (igroki[indexIgroka].Tip == baza.tip[2])
             {
-                ip.Hod(ref igroki, igrokiVneIgri, territorii, indexIgroka, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, cvetIgroka, pictureKarta, labelOD, panelInterfeis);
-                SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, false, indexScenaria, bitKartaTerritorii, ref bitKartaIgri);
+                ip.Hod(ref igroki, igrokiVneIgri, territorii, ref indexIgroka, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, pictureKarta, labelOD, panelInterfeis);
+                if(igroki.Count > 1)SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, false, indexScenaria, bitKartaTerritorii, ref bitKartaIgri);
             }
 
             if (igroki[indexIgroka].Tip == baza.tip[1])
@@ -157,6 +157,7 @@ namespace Bitva_Polcovodcev
                 Proverka proverka = new Proverka();
 
                 proverka.ProverkaPolojeniaIndexaIgroka(igroki, ref indexIgroka, nomerIgroka);
+
             }
         }
 

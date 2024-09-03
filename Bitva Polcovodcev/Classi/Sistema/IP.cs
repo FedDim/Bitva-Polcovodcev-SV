@@ -8,11 +8,11 @@ namespace Bitva_Polcovodcev.Classi.Sistema
     internal class IP
     {
         Random rnd = new Random();
-        Baza baza = new Baza();
         List<int> territoriiDlaZahvata = new List<int>();
 
-        public void Hod(ref List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, int indexIgroka, int indexScenaria, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri, Color cvetIgroka, PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
+        public void Hod(ref List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgroka, int indexScenaria, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri, PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
         {
+            Baza baza = new Baza();
 
             BrosokKubika(igroki, indexIgroka);
 
@@ -23,7 +23,7 @@ namespace Bitva_Polcovodcev.Classi.Sistema
 
                 if (territoriiDlaZahvata.Count > 0)
                 {
-                    ViborTerritorii(igroki, igrokiVneIgri, territorii, indexIgroka, bitKartaTerritorii, ref bitKartaIgri, indexIgroka, pictureKarta, labelOD, panelInterfeis);
+                    ViborTerritorii(igroki, igrokiVneIgri, territorii, ref indexIgroka, bitKartaTerritorii, ref bitKartaIgri, pictureKarta, labelOD, panelInterfeis);
 
                 }
 
@@ -35,7 +35,7 @@ namespace Bitva_Polcovodcev.Classi.Sistema
 
         }
 
-        public void ViborTerritorii(List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, int indexIgrok, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri, int indexIgroka, PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
+        public void ViborTerritorii(List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgrok, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri, PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
         {
             Raschet raschet = new Raschet();
             Grafika grafika = new Grafika();
@@ -53,7 +53,7 @@ namespace Bitva_Polcovodcev.Classi.Sistema
 
             raschet.Pocrass(igroki, igrokiVneIgri, territorii, ref indexIgrok, nomerTerritoriiPoteri);
 
-            grafika.Otrisovka(igroki, territorii, bitKartaTerritorii, ref bitKartaIgri, nomerTerritoriiPoteri, indexIgroka, pictureKarta, labelOD, panelInterfeis);
+            grafika.Otrisovka(igroki, territorii, bitKartaTerritorii, ref bitKartaIgri, nomerTerritoriiPoteri, indexIgrok, pictureKarta, labelOD, panelInterfeis);
 
             territoriiDlaZahvata = new List<int>();
         }
