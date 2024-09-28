@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classi\Dannie\Baza.cs" />
+    <Compile Include="Classi\Dannie\Data.cs" />
     <Compile Include="Classi\Dannie\Igrok.cs" />
     <Compile Include="Classi\Dannie\Territorii.cs" />
     <Compile Include="Classi\Sistema\Grafika.cs" />
@@ -99,7 +100,6 @@
     <EmbeddedResource Include="ViborKarti.resx">
       <DependentUpon>ViborKarti.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="bin\Debug\Bitva Polcovodcev.exe.config" />
     <None Include="bin\Debug\IgrokData_BitvaZaOstrov.json" />
     <None Include="bin\Debug\IgrokData_Proba.json" />
     <None Include="bin\Debug\TerritoriiData_BitvaZaOstrov.json" />
@@ -152,14 +152,8 @@
     <None Include="Resources\BitvaZaOstrov_Provincii.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\Bitva Polcovodcev.exe" />
-    <Content Include="bin\Debug\Bitva Polcovodcev.pdb" />
-    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
-    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
     <Content Include="Значокъ.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Release\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

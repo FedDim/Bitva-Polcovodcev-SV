@@ -12,8 +12,6 @@ namespace Bitva_Polcovodcev.Classi.Sistema
 
         public void Hod(ref List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgroka, int indexScenaria, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri, PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
         {
-            Baza baza = new Baza();
-
             BrosokKubika(igroki, indexIgroka);
 
             while (igroki[indexIgroka].KolicestvoOD > 1)
@@ -27,7 +25,7 @@ namespace Bitva_Polcovodcev.Classi.Sistema
 
                 }
 
-                if (igroki[indexIgroka].CenaZahvata == int.Parse(baza.scenarii[indexScenaria, 1]))
+                if (igroki[indexIgroka].CenaZahvata == int.Parse(Baza.scenarii[indexScenaria, 1]))
                 {
                     break;
                 }

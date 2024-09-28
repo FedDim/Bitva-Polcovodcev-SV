@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Igra));
             this.panelInterfeis = new System.Windows.Forms.Panel();
             this.buttonHod = new System.Windows.Forms.Button();
@@ -37,10 +38,23 @@
             this.labelNazvanie = new System.Windows.Forms.Label();
             this.pictureFlag = new System.Windows.Forms.PictureBox();
             this.pictureKarta = new System.Windows.Forms.PictureBox();
+            this.panelDeistvie = new System.Windows.Forms.Panel();
+            this.panelPobeda = new System.Windows.Forms.Panel();
+            this.labelTextPobedi = new System.Windows.Forms.Label();
+            this.buttonPobedaVihod = new System.Windows.Forms.Button();
+            this.buttonPobedaGlavnoeMenu = new System.Windows.Forms.Button();
+            this.panelMenu = new System.Windows.Forms.Panel();
+            this.buttonMenuVihod = new System.Windows.Forms.Button();
+            this.buttonMenuVGlavnoeMenu = new System.Windows.Forms.Button();
+            this.buttonMenuNabludatel = new System.Windows.Forms.Button();
+            this.timerProverkaNazatia = new System.Windows.Forms.Timer(this.components);
             this.panelInterfeis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBrosok)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFlag)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureKarta)).BeginInit();
+            this.panelDeistvie.SuspendLayout();
+            this.panelPobeda.SuspendLayout();
+            this.panelMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelInterfeis
@@ -69,6 +83,7 @@
             this.buttonHod.Name = "buttonHod";
             this.buttonHod.Size = new System.Drawing.Size(119, 46);
             this.buttonHod.TabIndex = 4;
+            this.buttonHod.TabStop = false;
             this.buttonHod.Text = "Следующій Ходъ";
             this.buttonHod.UseVisualStyleBackColor = false;
             this.buttonHod.Click += new System.EventHandler(this.ButtonHod_Click);
@@ -93,7 +108,8 @@
             this.buttonBrosok.Margin = new System.Windows.Forms.Padding(4);
             this.buttonBrosok.Name = "buttonBrosok";
             this.buttonBrosok.Size = new System.Drawing.Size(152, 31);
-            this.buttonBrosok.TabIndex = 0;
+            this.buttonBrosok.TabIndex = 2;
+            this.buttonBrosok.TabStop = false;
             this.buttonBrosok.Text = "Бросокъ Кубика";
             this.buttonBrosok.UseVisualStyleBackColor = false;
             this.buttonBrosok.Click += new System.EventHandler(this.ButtonBrosok_Click);
@@ -140,11 +156,114 @@
             this.pictureKarta.TabStop = false;
             this.pictureKarta.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureKarta_MouseDown);
             // 
+            // panelDeistvie
+            // 
+            this.panelDeistvie.Controls.Add(this.panelPobeda);
+            this.panelDeistvie.Controls.Add(this.panelMenu);
+            this.panelDeistvie.Location = new System.Drawing.Point(54, 33);
+            this.panelDeistvie.Name = "panelDeistvie";
+            this.panelDeistvie.Size = new System.Drawing.Size(769, 414);
+            this.panelDeistvie.TabIndex = 1;
+            this.panelDeistvie.Visible = false;
+            this.panelDeistvie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanelDeistvie_MouseDown);
+            // 
+            // panelPobeda
+            // 
+            this.panelPobeda.Controls.Add(this.labelTextPobedi);
+            this.panelPobeda.Controls.Add(this.buttonPobedaVihod);
+            this.panelPobeda.Controls.Add(this.buttonPobedaGlavnoeMenu);
+            this.panelPobeda.Location = new System.Drawing.Point(428, 52);
+            this.panelPobeda.Name = "panelPobeda";
+            this.panelPobeda.Size = new System.Drawing.Size(270, 190);
+            this.panelPobeda.TabIndex = 1;
+            this.panelPobeda.Visible = false;
+            // 
+            // labelTextPobedi
+            // 
+            this.labelTextPobedi.AutoEllipsis = true;
+            this.labelTextPobedi.AutoSize = true;
+            this.labelTextPobedi.Location = new System.Drawing.Point(69, 44);
+            this.labelTextPobedi.Name = "labelTextPobedi";
+            this.labelTextPobedi.Size = new System.Drawing.Size(44, 16);
+            this.labelTextPobedi.TabIndex = 2;
+            this.labelTextPobedi.Text = "label1";
+            // 
+            // buttonPobedaVihod
+            // 
+            this.buttonPobedaVihod.Location = new System.Drawing.Point(37, 130);
+            this.buttonPobedaVihod.Name = "buttonPobedaVihod";
+            this.buttonPobedaVihod.Size = new System.Drawing.Size(197, 42);
+            this.buttonPobedaVihod.TabIndex = 1;
+            this.buttonPobedaVihod.TabStop = false;
+            this.buttonPobedaVihod.Text = "На рабочій столъ";
+            this.buttonPobedaVihod.UseVisualStyleBackColor = true;
+            this.buttonPobedaVihod.Click += new System.EventHandler(this.ButtonVixod_Click);
+            // 
+            // buttonPobedaGlavnoeMenu
+            // 
+            this.buttonPobedaGlavnoeMenu.Location = new System.Drawing.Point(37, 82);
+            this.buttonPobedaGlavnoeMenu.Name = "buttonPobedaGlavnoeMenu";
+            this.buttonPobedaGlavnoeMenu.Size = new System.Drawing.Size(197, 42);
+            this.buttonPobedaGlavnoeMenu.TabIndex = 0;
+            this.buttonPobedaGlavnoeMenu.TabStop = false;
+            this.buttonPobedaGlavnoeMenu.Text = "Въ главное меню";
+            this.buttonPobedaGlavnoeMenu.UseVisualStyleBackColor = true;
+            this.buttonPobedaGlavnoeMenu.Click += new System.EventHandler(this.ButtonGlavnoeMenu_Click);
+            // 
+            // panelMenu
+            // 
+            this.panelMenu.Controls.Add(this.buttonMenuVihod);
+            this.panelMenu.Controls.Add(this.buttonMenuVGlavnoeMenu);
+            this.panelMenu.Controls.Add(this.buttonMenuNabludatel);
+            this.panelMenu.Location = new System.Drawing.Point(46, 27);
+            this.panelMenu.Name = "panelMenu";
+            this.panelMenu.Size = new System.Drawing.Size(305, 242);
+            this.panelMenu.TabIndex = 0;
+            this.panelMenu.Visible = false;
+            // 
+            // buttonMenuVihod
+            // 
+            this.buttonMenuVihod.Location = new System.Drawing.Point(66, 161);
+            this.buttonMenuVihod.Name = "buttonMenuVihod";
+            this.buttonMenuVihod.Size = new System.Drawing.Size(170, 54);
+            this.buttonMenuVihod.TabIndex = 2;
+            this.buttonMenuVihod.TabStop = false;
+            this.buttonMenuVihod.Text = "На рабочій столъ";
+            this.buttonMenuVihod.UseVisualStyleBackColor = true;
+            this.buttonMenuVihod.Click += new System.EventHandler(this.ButtonVixod_Click);
+            // 
+            // buttonMenuVGlavnoeMenu
+            // 
+            this.buttonMenuVGlavnoeMenu.Location = new System.Drawing.Point(66, 107);
+            this.buttonMenuVGlavnoeMenu.Name = "buttonMenuVGlavnoeMenu";
+            this.buttonMenuVGlavnoeMenu.Size = new System.Drawing.Size(170, 54);
+            this.buttonMenuVGlavnoeMenu.TabIndex = 1;
+            this.buttonMenuVGlavnoeMenu.TabStop = false;
+            this.buttonMenuVGlavnoeMenu.Text = "Въ главное меню";
+            this.buttonMenuVGlavnoeMenu.UseVisualStyleBackColor = true;
+            this.buttonMenuVGlavnoeMenu.Click += new System.EventHandler(this.ButtonGlavnoeMenu_Click);
+            // 
+            // buttonMenuNabludatel
+            // 
+            this.buttonMenuNabludatel.Enabled = false;
+            this.buttonMenuNabludatel.Location = new System.Drawing.Point(66, 53);
+            this.buttonMenuNabludatel.Name = "buttonMenuNabludatel";
+            this.buttonMenuNabludatel.Size = new System.Drawing.Size(170, 54);
+            this.buttonMenuNabludatel.TabIndex = 0;
+            this.buttonMenuNabludatel.TabStop = false;
+            this.buttonMenuNabludatel.Text = "Наблюдатель";
+            this.buttonMenuNabludatel.UseVisualStyleBackColor = true;
+            // 
+            // timerProverkaNazatia
+            // 
+            this.timerProverkaNazatia.Tick += new System.EventHandler(this.TimerProverkaNazatia_Tick);
+            // 
             // Igra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.panelDeistvie);
             this.Controls.Add(this.panelInterfeis);
             this.Controls.Add(this.pictureKarta);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -156,11 +275,16 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Битва Поководцевъ";
             this.Load += new System.EventHandler(this.FormIgra_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Igra_KeyDown);
             this.panelInterfeis.ResumeLayout(false);
             this.panelInterfeis.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBrosok)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureFlag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureKarta)).EndInit();
+            this.panelDeistvie.ResumeLayout(false);
+            this.panelPobeda.ResumeLayout(false);
+            this.panelPobeda.PerformLayout();
+            this.panelMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -175,6 +299,16 @@
         private System.Windows.Forms.Button buttonBrosok;
         private System.Windows.Forms.Label labelOD;
         private System.Windows.Forms.Button buttonHod;
+        private System.Windows.Forms.Panel panelMenu;
+        private System.Windows.Forms.Panel panelPobeda;
+        private System.Windows.Forms.Label labelTextPobedi;
+        private System.Windows.Forms.Button buttonPobedaVihod;
+        private System.Windows.Forms.Button buttonPobedaGlavnoeMenu;
+        private System.Windows.Forms.Button buttonMenuVihod;
+        private System.Windows.Forms.Button buttonMenuVGlavnoeMenu;
+        private System.Windows.Forms.Button buttonMenuNabludatel;
+        private System.Windows.Forms.Timer timerProverkaNazatia;
+        public System.Windows.Forms.Panel panelDeistvie;
     }
 }
 

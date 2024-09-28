@@ -1,37 +1,53 @@
-﻿using Bitva_Polcovodcev.Classi.Sistema;
+﻿using Bitva_Polcovodcev.Classi.Dannie;
+using Bitva_Polcovodcev.Classi.Sistema;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Bitva_Polcovodcev
 {
     public class Raschet
     {
-        Baza baza = new Baza();
 
-        public void SmenaIgroka(List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgroka, ref Label labelNazvanie, ref Label labelOD, ref PictureBox pictureFlag, ref PictureBox pictureBrosok, PictureBox pictureKarta, Button buttonBrosok, Button buttonHod, Panel panelInterfeis, ref Color cvetIgroka, bool zagruzka, int indexScenaria, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri)
+        public void SmenaIgroka(List<Igrok> igroki, List<Igrok> igrokiVneIgri,
+            List<Territorii> territorii,
+            ref int indexIgroka,
+            ref Label labelNazvanie, ref Label labelOD,
+            ref PictureBox pictureFlag, ref PictureBox pictureBrosok, PictureBox pictureKarta,
+            Button buttonBrosok, Button buttonHod,
+            Panel panelInterfeis,
+            ref Color cvetIgroka,
+            bool zagruzka, int indexScenaria,
+            Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri,
+            ref Panel panelMenu, ref Panel panelDeistvia)
         {
-            IP ip = new IP();
 
-            if(!zagruzka && igroki[indexIgroka].Tip != baza.tip[0])
+            if(!zagruzka || (zagruzka && igroki[indexIgroka].Tip ==  Baza.tip[0]))
             {
                 while (true)
                 {
                     if (indexIgroka < igroki.Count - 1) indexIgroka++;
                     else indexIgroka = 0;
 
-                    if (igroki[indexIgroka].JivLi && igroki[indexIgroka].Tip != baza.tip[0]) break;
+                    if (igroki[indexIgroka].JivLi && igroki[indexIgroka].Tip != Baza.tip[0]) break;
                 }
             }
 
-            if (igroki[indexIgroka].Tip == baza.tip[2])
+            if (igroki[indexIgroka].Tip == Baza.tip[2])
             {
+                IP ip = new IP();
                 ip.Hod(ref igroki, igrokiVneIgri, territorii, ref indexIgroka, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, pictureKarta, labelOD, panelInterfeis);
-                if(igroki.Count > 1)SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, false, indexScenaria, bitKartaTerritorii, ref bitKartaIgri);
+                if (igroki.Count > 1) 
+                { 
+                    if(Data.prisutstvuiutLiJI) SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, false, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, ref panelMenu, ref panelDeistvia);
+                }
             }
 
-            if (igroki[indexIgroka].Tip == baza.tip[1])
+            Proverka.ProverkaKorrektnostiElementovDatiIFormi(ref panelMenu, ref panelDeistvia);
+
+            if (igroki[indexIgroka].Tip == Baza.tip[1] || !Data.prisutstvuiutLiJI)
             {
                 pictureFlag.BackColor = igroki[indexIgroka].Cvet;//Пока такъ, дальше догружать флагъ
                 labelNazvanie.Text = igroki[indexIgroka].Ima;
@@ -151,12 +167,16 @@ namespace Bitva_Polcovodcev
 
                 int nomerIgroka = igroki[indexIgroka].Nomer;
 
+                if (igroki[indexIgrokaPoteravshego].Tip == Baza.tip[0]) Data.kolichestvoNI--;
+                else if (igroki[indexIgrokaPoteravshego].Tip == Baza.tip[1]) Data.kolichestvoJI--;
+                else if (igroki[indexIgrokaPoteravshego].Tip == Baza.tip[2]) Data.kolichestvoIP--;
+
+                if (Data.kolichestvoJI == 0) Data.prisutstvuiutLiJI = false;
+
                 igrokiVneIgri.Add(igroki[indexIgrokaPoteravshego]);
                 igroki.Remove(igroki[indexIgrokaPoteravshego]);
 
-                Proverka proverka = new Proverka();
-
-                proverka.ProverkaPolojeniaIndexaIgroka(igroki, ref indexIgroka, nomerIgroka);
+                Proverka.ProverkaPolojeniaIndexaIgroka(igroki, ref indexIgroka, nomerIgroka);
 
             }
         }
@@ -167,9 +187,9 @@ namespace Bitva_Polcovodcev
 
             int indexIgrokaPoteravshego = igroki.FindIndex(list => list.PodkontrolnieTerritorii.Contains(nomerTerritoriiPoteri) && list.Nomer != igroki[indexIgrokaDlaLambdi].Nomer);
 
-            igroki[indexIgrok].KolicestvoOD -= baza.cenaZahvataTerritorii;
-            igroki[indexIgrok].CenaZahvata += baza.cenaZahvataTerritorii;
-            igroki[indexIgrokaPoteravshego].CenaZahvata -= baza.cenaZahvataTerritorii;
+            igroki[indexIgrok].KolicestvoOD -= Baza.cenaZahvataTerritorii;
+            igroki[indexIgrok].CenaZahvata += Baza.cenaZahvataTerritorii;
+            igroki[indexIgrokaPoteravshego].CenaZahvata -= Baza.cenaZahvataTerritorii;
 
             igroki[indexIgrok].SosediIgroki.Remove(igroki[indexIgrokaPoteravshego].Nomer);
 

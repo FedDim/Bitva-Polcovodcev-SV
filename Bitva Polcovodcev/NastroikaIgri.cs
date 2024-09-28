@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bitva_Polcovodcev.Classi.Dannie;
+using Bitva_Polcovodcev.Classi.Sistema;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -19,14 +21,14 @@ namespace Bitva_Polcovodcev
         Button[] buttonskiVerch, buttonskiNiz;
         bool dannieShozi = true, dannieSohraneni = false;
         Igra igra;
-        Zagruzka zagruzka = new Zagruzka();
-        Baza baza = new Baza();
 
         private void NastroikaIgri_Load(object sender, EventArgs e)
         {
-            zagruzka.Deserelizacia_IgrokData(ref igroki, baza.scenarii[indexScenaria, 4]);
+            Zagruzka.Deserelizacia_IgrokData(ref igroki, Baza.scenarii[indexScenaria, 4]);
 
-            zagruzka.Deserelizacia_IgrokData(ref igrokiDlaRedactirovania, baza.scenarii[indexScenaria, 4]);
+            Zagruzka.Deserelizacia_IgrokData(ref igrokiDlaRedactirovania, Baza.scenarii[indexScenaria, 4]);
+
+            Proverka.ProverkaTipovIgrokov(ref Data.kolichestvoJI, ref Data.kolichestvoIP, ref Data.kolichestvoNI, igroki);
 
             ZagruzkaElementovFormiNastroikiIgri();
         }
@@ -101,12 +103,18 @@ namespace Bitva_Polcovodcev
             {
                 case "Нулевой Игрокъ":
                     btn.Text = "Живой Игрокъ";
+                    Data.kolichestvoNI--;
+                    Data.kolichestvoJI++;
                     break;
                 case "Живой Игрокъ":
                     btn.Text = "Искусственный Противникъ";
+                    Data.kolichestvoJI--;
+                    Data.kolichestvoIP++;
                     break;
                 case "Искусственный Противникъ":
                     btn.Text = "Нулевой Игрокъ";
+                    Data.kolichestvoIP--;
+                    Data.kolichestvoNI++;
                     break;
             }
 
@@ -293,6 +301,10 @@ namespace Bitva_Polcovodcev
                 if(otvet == DialogResult.Yes) igroki = new List<Igrok>(igrokiDlaRedactirovania);
             }
 
+            if (Data.kolichestvoNI + Data.kolichestvoJI + Data.kolichestvoIP != igroki.Count) Proverka.ProverkaTipovIgrokov(ref Data.kolichestvoJI, ref Data.kolichestvoIP, ref Data.kolichestvoNI, igroki);
+
+            if (Data.kolichestvoJI > 0) Data.prisutstvuiutLiJI = true;
+
             igra = new Igra
             {
                 Location = new Point(this.Location.X, this.Location.Y),
@@ -307,7 +319,7 @@ namespace Bitva_Polcovodcev
 
         private void SohranitIzmenenia_Click(object sender, EventArgs e)
         {
-            zagruzka.Sohranenie_IgrokData(igrokiDlaRedactirovania, baza.scenarii[indexScenaria, 4]);
+            Zagruzka.Sohranenie_IgrokData(igrokiDlaRedactirovania, Baza.scenarii[indexScenaria, 4]);
             sohranitIzmenenia.Enabled = false;
         }
     }

@@ -18,7 +18,6 @@ namespace Bitva_Polcovodcev
         }
 
         Button[] vibori;
-        Baza baza = new Baza();
         public int indexScenaria;
         NastroikaIgri nastroikaIgri;
 
@@ -43,10 +42,10 @@ namespace Bitva_Polcovodcev
                     break;
             }
 
-            nazvanie.Text = "Названіе: " + baza.scenarii[indexScenaria, 0];
-            cenaZahvata.Text = "Цѣна Захвата: " + baza.scenarii[indexScenaria, 1];
-            kolichestvoTerritorii.Text = "Количество Территорій: " + baza.scenarii[indexScenaria, 2];
-            kolichestvoIgrokov.Text = "Количество Возможных Игроковъ: " + baza.scenarii[indexScenaria, 3];
+            nazvanie.Text = "Названіе: " + Baza.scenarii[indexScenaria, 0];
+            cenaZahvata.Text = "Цѣна Захвата: " + Baza.scenarii[indexScenaria, 1];
+            kolichestvoTerritorii.Text = "Количество Территорій: " + Baza.scenarii[indexScenaria, 2];
+            kolichestvoIgrokov.Text = "Количество Возможных Игроковъ: " + Baza.scenarii[indexScenaria, 3];
 
             if (karta.Visible == false) karta.Visible = true;
         }
@@ -57,16 +56,16 @@ namespace Bitva_Polcovodcev
             vibor.Height = 75;
             vibor.Width = 120;
 
-            vibori = new Button[baza.scenarii.GetLength(0)];
+            vibori = new Button[Baza.scenarii.GetLength(0)];
             vibori[0] = vibor;
 
-            vibor.Text = baza.scenarii[0, 0];
+            vibor.Text = Baza.scenarii[0, 0];
 
             karti.Width = 126;
 
             kartiFon.Width = karti.Width + 17;
 
-            for (int i = 1; i < baza.scenarii.GetLength(0); i++)
+            for (int i = 1; i < Baza.scenarii.GetLength(0); i++)
             {
                 vibori[i] = new Button
                 {
@@ -74,7 +73,7 @@ namespace Bitva_Polcovodcev
                     BackColor = vibori[i - 1].BackColor,
                     Height = vibori[i - 1].Height,
                     Width = vibori[i - 1].Width,
-                    Text = baza.scenarii[i, 0],
+                    Text = Baza.scenarii[i, 0],
                     Font = vibori[i - 1].Font,
                     FlatStyle = vibori[i - 1].FlatStyle,
                     ForeColor = vibori[i - 1].ForeColor,

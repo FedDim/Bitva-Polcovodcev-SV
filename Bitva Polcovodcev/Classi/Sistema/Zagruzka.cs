@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Bitva_Polcovodcev.Classi.Dannie;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -8,9 +9,14 @@ namespace Bitva_Polcovodcev
 {
     public class Zagruzka
     {
-        Baza baza = new Baza();
+        public static void ZagruzkaElementovFormiDlaData(Form form, Panel panelDeistvie, Panel panelMenu)
+        {
+            Data.Igra = form;
+            Data.panelDeistvie = panelDeistvie;
+            Data.panelMenu = panelMenu;
+        }
 
-        public void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form, int indexScenaria)
+        public static void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form, int indexScenaria)
         {
             pictureKarta.Height = BitKartaIgri.Height;
             pictureKarta.Width = BitKartaIgri.Width;
@@ -23,10 +29,10 @@ namespace Bitva_Polcovodcev
             form.Height = pictureKarta.Height + 38;
             form.Width = pictureKarta.Width + panelInterfeis.Width + 16;
 
-            form.Text = baza.scenarii[indexScenaria, 0];
+            form.Text = Baza.scenarii[indexScenaria, 0];
         }
 
-        public void ZagruzkaElementovFormiDlaIgroka(PictureBox pictureFlag, PictureBox pictureBrosok, Label labelNazvanie, Label labelOD, Button buttonBrosok, Button buttonHod, Panel panelInterfeis)
+        public static void ZagruzkaElementovFormiDlaIgroka(PictureBox pictureFlag, PictureBox pictureBrosok, Label labelNazvanie, Label labelOD, Button buttonBrosok, Button buttonHod, Panel panelInterfeis)
         {
             pictureFlag.Width = panelInterfeis.Width;
             pictureFlag.Height = panelInterfeis.Height / 4;
@@ -47,7 +53,7 @@ namespace Bitva_Polcovodcev
             buttonHod.Location = new Point(0, labelOD.Location.Y + labelOD.Height + 5);
         }
 
-        public void Deserelizacia_IgrokData(ref List<Igrok> igroki, string nazvanie)
+        public static void Deserelizacia_IgrokData(ref List<Igrok> igroki, string nazvanie)
         {
             try
             {
@@ -59,7 +65,7 @@ namespace Bitva_Polcovodcev
             }
         }
 
-        public void Deserelizacia_TerritoriiData(ref List<Territorii> territorii, string nazvanie)
+        public static void Deserelizacia_TerritoriiData(ref List<Territorii> territorii, string nazvanie)
         {
             try
             {
@@ -71,7 +77,7 @@ namespace Bitva_Polcovodcev
             }
         }
 
-        public void Sohranenie_IgrokData(List<Igrok> igroki, string nazvanie)
+        public static void Sohranenie_IgrokData(List<Igrok> igroki, string nazvanie)
         {
             try
             {
@@ -84,7 +90,7 @@ namespace Bitva_Polcovodcev
             }
         }
 
-        public void Sohranenie_IgrokTerritorii(List<Territorii> territorii, string nazvanie)
+        public static void Sohranenie_IgrokTerritorii(List<Territorii> territorii, string nazvanie)
         {
             try
             {
@@ -96,7 +102,7 @@ namespace Bitva_Polcovodcev
             }
         }
 
-        public void ZagruzkaBitmapKart(int indexScenaria, ref Bitmap kartaIgrokov, ref Bitmap kartaTerritorii)
+        public static void ZagruzkaBitmapKart(int indexScenaria, ref Bitmap kartaIgrokov, ref Bitmap kartaTerritorii)
         {
             switch (indexScenaria)
             {
