@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Bitva_Polcovodcev.Classi.Dannie;
 
 namespace Bitva_Polcovodcev.Classi.Sistema
 {
@@ -10,22 +11,22 @@ namespace Bitva_Polcovodcev.Classi.Sistema
         Random rnd = new Random();
         List<int> territoriiDlaZahvata = new List<int>();
 
-        public void Hod(ref List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgroka, int indexScenaria, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri, PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
+        public void Hod(PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
         {
-            BrosokKubika(igroki, indexIgroka);
+            BrosokKubika();
 
-            while (igroki[indexIgroka].KolicestvoOD > 1)
+            while (Data.igroki[Data.indexIgroka].KolicestvoOD > 1)
             {
                 //ИП забираетъ территоріи у самого большого сосѣда
-                Logika(igroki, indexIgroka);
+                Logika(Data.igroki);
 
                 if (territoriiDlaZahvata.Count > 0)
                 {
-                    ViborTerritorii(igroki, igrokiVneIgri, territorii, ref indexIgroka, bitKartaTerritorii, ref bitKartaIgri, pictureKarta, labelOD, panelInterfeis);
+                    ViborTerritorii(pictureKarta, labelOD, panelInterfeis);
 
                 }
 
-                if (igroki[indexIgroka].CenaZahvata == int.Parse(Baza.scenarii[indexScenaria, 1]))
+                if (Data.igroki[Data.indexIgroka].CenaZahvata == int.Parse(Baza.scenarii[Data.indexScenaria, 1]))
                 {
                     break;
                 }
@@ -33,11 +34,8 @@ namespace Bitva_Polcovodcev.Classi.Sistema
 
         }
 
-        public void ViborTerritorii(List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgrok, Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri, PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
+        public void ViborTerritorii(PictureBox pictureKarta, Label labelOD, Panel panelInterfeis)
         {
-            Raschet raschet = new Raschet();
-            Grafika grafika = new Grafika();
-
             int nomerTerritoriiPoteri;
 
             if (territoriiDlaZahvata.Count > 1)
@@ -49,47 +47,48 @@ namespace Bitva_Polcovodcev.Classi.Sistema
                 nomerTerritoriiPoteri = territoriiDlaZahvata[0];
             }
 
-            raschet.Pocrass(igroki, igrokiVneIgri, territorii, ref indexIgrok, nomerTerritoriiPoteri);
+            Raschet.Pocrass(nomerTerritoriiPoteri);
 
-            grafika.Otrisovka(igroki, territorii, bitKartaTerritorii, ref bitKartaIgri, nomerTerritoriiPoteri, indexIgrok, pictureKarta, labelOD, panelInterfeis);
+            Grafika.Otrisovka(nomerTerritoriiPoteri, pictureKarta, labelOD, panelInterfeis);
 
             territoriiDlaZahvata = new List<int>();
         }
 
-        public void Logika(List<Igrok> igroki, int indexIgrok)
+        public void Logika(List<Igrok> igroki)
         {
             Proverka proverka = new Proverka();
 
             List<int> sosedi = new List<int>();
             int naibolsaiaCenaZahvata = 0;
 
-            for (int i = 0; i < igroki[indexIgrok].SosediIgroki.Count; i++)
+            for (int i = 0; i < igroki[Data.indexIgroka].SosediIgroki.Count; i++)
             {
-                if (igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, igroki[indexIgrok].SosediIgroki[i]))].CenaZahvata >= naibolsaiaCenaZahvata)
+                if (igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, igroki[Data.indexIgroka].SosediIgroki[i]))].CenaZahvata >= naibolsaiaCenaZahvata)
                 {
-                    if (igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, igroki[indexIgrok].SosediIgroki[i]))].CenaZahvata > naibolsaiaCenaZahvata)
+                    if (igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, igroki[Data.indexIgroka].SosediIgroki[i]))].CenaZahvata > naibolsaiaCenaZahvata)
                     {
-                        naibolsaiaCenaZahvata = igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, igroki[indexIgrok].SosediIgroki[i]))].CenaZahvata;
+                        naibolsaiaCenaZahvata = igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, igroki[Data.indexIgroka].SosediIgroki[i]))].CenaZahvata;
                         sosedi.Clear();
                     }
 
-                    sosedi.Add(igroki[indexIgrok].SosediIgroki[i]);
+                    sosedi.Add(igroki[Data.indexIgroka].SosediIgroki[i]);
 
                 }
             }
 
-            for (int ter = 0; ter < igroki[indexIgrok].SosediTerritorii.Count; ter++)
+            for (int ter = 0; ter < igroki[Data.indexIgroka].SosediTerritorii.Count; ter++)
             {
-                proverka.FormirovanieSpiskaZahvataTerritorii(igroki, sosedi, territoriiDlaZahvata, indexIgrok, ter);
+
+                Proverka.FormirovanieSpiskaZahvataTerritorii(sosedi, territoriiDlaZahvata, ter);
             }
         }
 
-        public void BrosokKubika(List<Igrok> igroki, int indexIgrok)
+        public void BrosokKubika()
         {
 
             int Znachenie = rnd.Next(1, 7);
 
-            igroki[indexIgrok].KolicestvoOD += Znachenie;
+            Data.igroki[Data.indexIgroka].KolicestvoOD += Znachenie;
 
         }
     }

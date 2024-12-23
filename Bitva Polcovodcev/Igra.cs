@@ -16,33 +16,22 @@ namespace Bitva_Polcovodcev
             panelDeistvie.MouseMove += new MouseEventHandler(PanelDeistvie_Dvijenie);
         }
 
-
         Form viborKarti;
-        Bitmap bitKartaIgri, bitKartaTerritorii;
-        public int indexScenaria;
-        int indexIgroka = 0, hod = 0;
         bool vivodSvazei = false, panelPeremeshaut = false;
-        Color cvetIgroka;
-
-        public List<Igrok> igroki = new List<Igrok>();
-        public List<Igrok> igrokiVneIgri = new List<Igrok>();
-        public List<Territorii> territorii = new List<Territorii>();
-
-        Raschet raschet = new Raschet();
-        Grafika grafika = new Grafika();
 
         private void FormIgra_Load(object sender, EventArgs e)
         {
-            Zagruzka.ZagruzkaBitmapKart(indexScenaria, ref bitKartaIgri, ref bitKartaTerritorii);
+            Data.bitKartaIgri = Zagruzka.ZagruzkaBitmapKarti("Карта Политій");
+            Data.bitKartaTerritorii = Zagruzka.ZagruzkaBitmapKarti("Карта Территорій");
 
-            Zagruzka.ZagruzkaElementovFormiIgra(pictureKarta, bitKartaIgri, panelInterfeis, this, indexScenaria);
+            Zagruzka.ZagruzkaElementovFormiIgra(pictureKarta, panelInterfeis, this);
             Zagruzka.ZagruzkaElementovFormiDlaIgroka(pictureFlag, pictureBrosok, labelNazvanie, labelOD, buttonBrosok, buttonHod, panelInterfeis);
 
-            Zagruzka.Deserelizacia_TerritoriiData(ref territorii, Baza.scenarii[indexScenaria, 5]);
+            Zagruzka.Deserelizacia_TerritoriiData(ref Data.territorii, Baza.scenarii[Data.indexScenaria, 5]);
 
             Zagruzka.ZagruzkaElementovFormiDlaData(this, panelDeistvie, panelMenu);
 
-            raschet.SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, true, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, ref panelMenu, ref panelDeistvie);
+            Raschet.SmenaIgroka(ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, true, ref panelMenu, ref panelDeistvie);
         }
 
         private void ButtonBrosok_Click(object sender, EventArgs e)
@@ -79,9 +68,9 @@ namespace Bitva_Polcovodcev
 
             }
 
-            igroki[indexIgroka].KolicestvoOD += Znachenie;
+            Data.igroki[Data.indexIgroka].KolicestvoOD += Znachenie;
 
-            labelOD.Text = "ОД " + igroki[indexIgroka].KolicestvoOD;
+            labelOD.Text = "ОД " + Data.igroki[Data.indexIgroka].KolicestvoOD;
 
             buttonBrosok.Enabled = false;
 
@@ -149,37 +138,37 @@ namespace Bitva_Polcovodcev
 
         private void PictureKarta_MouseDown(object sender, MouseEventArgs e)
         {
-            Color cvetIgrovoiKarti = bitKartaIgri.GetPixel(e.X, e.Y);
+            Color cvetIgrovoiKarti = Data.bitKartaIgri.GetPixel(e.X, e.Y);
 
             if (cvetIgrovoiKarti != Baza.granica && cvetIgrovoiKarti != Baza.gori && cvetIgrovoiKarti != Baza.more)
             {
-                if (cvetIgrovoiKarti == cvetIgroka || (cvetIgrovoiKarti.R == cvetIgroka.R && cvetIgrovoiKarti.G == cvetIgroka.G && cvetIgrovoiKarti.B == cvetIgroka.B)) MessageBox.Show(igroki[indexIgroka].UpravlenieTerritorii);
+                if (cvetIgrovoiKarti == Data.igroki[Data.indexIgroka].Cvet || (cvetIgrovoiKarti.R == Data.igroki[Data.indexIgroka].Cvet.R && cvetIgrovoiKarti.G == Data.igroki[Data.indexIgroka].Cvet.G && cvetIgrovoiKarti.B == Data.igroki[Data.indexIgroka].Cvet.B)) MessageBox.Show(Data.igroki[Data.indexIgroka].UpravlenieTerritorii);
                 else
                 {
                     //Въ будущем можно будетъ прописать if для разныхъ типовъ территорій
 
-                    bool boolODdlaTerritorii = igroki[indexIgroka].KolicestvoOD >= Baza.cenaZahvataTerritorii;
+                    bool boolODdlaTerritorii = Data.igroki[Data.indexIgroka].KolicestvoOD >= Baza.cenaZahvataTerritorii;
                     bool boolSvaziEst = false;
                     int nomerTerritoriiDlaProverki = 0;
 
-                    Color cvetKartiTerritorii = bitKartaTerritorii.GetPixel(e.X, e.Y);
+                    Color cvetKartiTerritorii = Data.bitKartaTerritorii.GetPixel(e.X, e.Y);
 
-                    for (int ter = 0; ter < territorii.Count; ter++)
+                    for (int ter = 0; ter < Data.territorii.Count; ter++)
                     {
-                        if (cvetKartiTerritorii == territorii[ter].Cvet || (cvetKartiTerritorii.R == territorii[ter].Cvet.R && cvetKartiTerritorii.G == territorii[ter].Cvet.G && cvetKartiTerritorii.B == territorii[ter].Cvet.B))
+                        if (cvetKartiTerritorii == Data.territorii[ter].Cvet || (cvetKartiTerritorii.R == Data.territorii[ter].Cvet.R && cvetKartiTerritorii.G == Data.territorii[ter].Cvet.G && cvetKartiTerritorii.B == Data.territorii[ter].Cvet.B))
                         {
-                            nomerTerritoriiDlaProverki = territorii[ter].Nomer;
+                            nomerTerritoriiDlaProverki = Data.territorii[ter].Nomer;
 
-                            for (int terSosed = 0; terSosed < territorii[ter].Sosedi.Length; terSosed++)
+                            for (int terSosed = 0; terSosed < Data.territorii[ter].Sosedi.Length; terSosed++)
                             {
-                                if (igroki[indexIgroka].PodkontrolnieTerritorii.Contains(territorii[ter].Sosedi[terSosed]))
+                                if (Data.igroki[Data.indexIgroka].PodkontrolnieTerritorii.Contains(Data.territorii[ter].Sosedi[terSosed]))
                                 {
 
                                     if (boolODdlaTerritorii)//Переписать хватаетъ ли ОД для нужного типа
                                     {
                                         boolSvaziEst = true;
 
-                                        raschet.Pocrass(igroki, igrokiVneIgri, territorii, ref indexIgroka, nomerTerritoriiDlaProverki);
+                                        Raschet.Pocrass(nomerTerritoriiDlaProverki);
 
                                     }
                                     else if (!boolODdlaTerritorii) MessageBox.Show(Baza.MaloOD);
@@ -194,24 +183,24 @@ namespace Bitva_Polcovodcev
 
                     if (boolSvaziEst) 
                     {
-                        grafika.Otrisovka(igroki, territorii, bitKartaTerritorii, ref bitKartaIgri, nomerTerritoriiDlaProverki, indexIgroka, pictureKarta, labelOD, panelInterfeis);
+                        Grafika.Otrisovka(nomerTerritoriiDlaProverki, pictureKarta, labelOD, panelInterfeis);
                         
                     }
                 }
 
             }
 
-            for (int i = 0; i < igroki.Count; i++)
+            for (int i = 0; i < Data.igroki.Count; i++)
             {
-                if (igroki[i].CenaZahvata == 0 && igroki[i].JivLi)
+                if (Data.igroki[i].CenaZahvata == 0 && Data.igroki[i].JivLi)
                 {
-                    igroki[i].JivLi = false;
+                    Data.igroki[i].JivLi = false;
 
-                    if (igroki[i].Tip != Baza.tip[0]) MessageBox.Show("Страна подъ названіемъ: " + igroki[i].Ima + " перестала существовать");
+                    if (Data.igroki[i].Tip != Baza.tip[0]) MessageBox.Show("Страна подъ названіемъ: " + Data.igroki[i].Ima + " перестала существовать");
                 }
             }
 
-            if (vivodSvazei) MessageBox.Show(VivodSvazei(igroki));
+            if (vivodSvazei) MessageBox.Show(VivodSvazei(Data.igroki));
 
         }
 
@@ -239,7 +228,7 @@ namespace Bitva_Polcovodcev
                         if (!panelDeistvie.Visible)
                         {
 
-                            grafika.RabotaSIgrovimMenu(ref panelDeistvie, ref panelMenu, ref buttonMenuNabludatel, ref buttonMenuVGlavnoeMenu, ref buttonMenuVihod, this);
+                            Grafika.RabotaSIgrovimMenu(ref panelDeistvie, ref panelMenu, ref buttonMenuNabludatel, ref buttonMenuVGlavnoeMenu, ref buttonMenuVihod, this);
 
                             panelDeistvie.Visible = true;
                         }
@@ -251,12 +240,12 @@ namespace Bitva_Polcovodcev
 
         private void ButtonHod_Click(object sender, EventArgs e)
         {
-            if (igroki[indexIgroka].CenaZahvata == int.Parse(Baza.scenarii[indexScenaria, 1]))
+            if (Data.igroki[Data.indexIgroka].CenaZahvata == int.Parse(Baza.scenarii[Data.indexScenaria, 1]))
             {
                 buttonHod.Enabled = false;
-                grafika.VivodPobedi(ref panelDeistvie, ref panelPobeda, ref labelTextPobedi, ref buttonPobedaGlavnoeMenu, ref buttonPobedaVihod, igroki[indexIgroka].TekstPobedi, igroki[indexIgroka].Ima, this);
+                Grafika.VivodPobedi(ref panelDeistvie, ref panelPobeda, ref labelTextPobedi, ref buttonPobedaGlavnoeMenu, ref buttonPobedaVihod, Data.igroki[Data.indexIgroka].TekstPobedi, Data.igroki[Data.indexIgroka].Ima, this);
             }
-            else raschet.SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, false, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, ref panelMenu, ref panelDeistvie);
+            else Raschet.SmenaIgroka(ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, false, ref panelMenu, ref panelDeistvie);
         }
 
         private String VivodSvazei(List<Igrok> igroki)

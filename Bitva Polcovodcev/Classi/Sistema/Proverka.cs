@@ -9,41 +9,45 @@ namespace Bitva_Polcovodcev.Classi.Sistema
     {
         public static void ProverkaKorrektnostiElementovDatiIFormi(ref Panel panelMenu, ref Panel panelDeistvie)
         {
-            if(!panelMenu.Equals(Data.panelMenu)) panelMenu = Data.panelMenu;
-            if(!panelDeistvie.Equals(Data.panelDeistvie)) panelDeistvie = Data.panelDeistvie;
+            if (!panelDeistvie.Equals(Data.panelDeistvie))
+            {
+                panelDeistvie = Data.panelDeistvie;
+                panelMenu = Data.panelMenu;
+            }
+                
         }
 
-        public void FormirovanieSpiskaZahvataTerritorii(List<Igrok> igroki, List<int> spisokSosedei, List<int> kandidatiDlaZahvata, int igrokIndex, int indexTerritorii)
+        public static void FormirovanieSpiskaZahvataTerritorii(List<int> spisokSosedei, List<int> kandidatiDlaZahvata, int indexTerritorii)
         {
             for (int i = 0; i < spisokSosedei.Count; i++)
             {
-                if (igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, spisokSosedei[i]))].PodkontrolnieTerritorii.Contains(igroki[igrokIndex].SosediTerritorii[indexTerritorii]))
+                if (Data.igroki[Data.igroki.FindIndex(igrok => int.Equals(igrok.Nomer, spisokSosedei[i]))].PodkontrolnieTerritorii.Contains(Data.igroki[Data.indexIgroka].SosediTerritorii[indexTerritorii]))
                 {
-                    kandidatiDlaZahvata.Add(igroki[igrokIndex].SosediTerritorii[indexTerritorii]);
+                    kandidatiDlaZahvata.Add(Data.igroki[Data.indexIgroka].SosediTerritorii[indexTerritorii]);
                 }
             }
 
         }
 
-        public static void ProverkaPolojeniaIndexaIgroka(List<Igrok> igroki, ref int indexIgroka, int nomerIgroka)
+        public static void ProverkaPolojeniaIndexaIgroka(int nomerIgroka)
         {
-            for (int i = 0; i < igroki.Count; i++)
+            for (int i = 0; i < Data.igroki.Count; i++)
             {
-                if (igroki[i].Nomer == nomerIgroka)
+                if (Data.igroki[i].Nomer == nomerIgroka)
                 {
-                    indexIgroka = i;
+                    Data.indexIgroka = i;
                     break;
                 }
             }
         }
 
-        public static void ProverkaTipovIgrokov(ref int kolichestvoJI, ref int kolichestvoIP, ref int kolichestvoNI, List<Igrok> igroki)
+        public static void ProverkaTipovIgrokov(ref int kolichestvoJI, ref int kolichestvoIP, ref int kolichestvoNI)
         {
-            for (int i = 0; i < igroki.Count; i++)
+            for (int i = 0; i < Data.igroki.Count; i++)
             {
-                if (igroki[i].Tip == Baza.tip[0]) kolichestvoNI++;
-                else if (igroki[i].Tip == Baza.tip[1]) kolichestvoJI++;
-                else if (igroki[i].Tip == Baza.tip[2]) kolichestvoIP++;
+                if (Data.igroki[i].Tip == Baza.tip[0]) kolichestvoNI++;
+                else if (Data.igroki[i].Tip == Baza.tip[1]) kolichestvoJI++;
+                else if (Data.igroki[i].Tip == Baza.tip[2]) kolichestvoIP++;
             }
         }
 

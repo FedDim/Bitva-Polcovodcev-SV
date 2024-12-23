@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bitva_Polcovodcev.Classi.Dannie;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,7 +19,6 @@ namespace Bitva_Polcovodcev
         }
 
         Button[] vibori;
-        public int indexScenaria;
         NastroikaIgri nastroikaIgri;
 
         private void ViborKarti_Load(object sender, EventArgs e)
@@ -30,9 +30,9 @@ namespace Bitva_Polcovodcev
         public void Vibor_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            indexScenaria = Convert.ToInt32(btn.Tag);
+            Data.indexScenaria = Convert.ToInt32(btn.Tag);
 
-            switch (indexScenaria)
+            switch (Data.indexScenaria)
             {
                 case 0:
                     kartina.Image = Properties.Resources.Proba_Igroki;
@@ -42,10 +42,10 @@ namespace Bitva_Polcovodcev
                     break;
             }
 
-            nazvanie.Text = "Названіе: " + Baza.scenarii[indexScenaria, 0];
-            cenaZahvata.Text = "Цѣна Захвата: " + Baza.scenarii[indexScenaria, 1];
-            kolichestvoTerritorii.Text = "Количество Территорій: " + Baza.scenarii[indexScenaria, 2];
-            kolichestvoIgrokov.Text = "Количество Возможных Игроковъ: " + Baza.scenarii[indexScenaria, 3];
+            nazvanie.Text = "Названіе: " + Baza.scenarii[Data.indexScenaria, 0];
+            cenaZahvata.Text = "Цѣна Захвата: " + Baza.scenarii[Data.indexScenaria, 1];
+            kolichestvoTerritorii.Text = "Количество Территорій: " + Baza.scenarii[Data.indexScenaria, 2];
+            kolichestvoIgrokov.Text = "Количество Возможных Игроковъ: " + Baza.scenarii[Data.indexScenaria, 3];
 
             if (karta.Visible == false) karta.Visible = true;
         }
@@ -100,7 +100,6 @@ namespace Bitva_Polcovodcev
             nastroikaIgri = new NastroikaIgri
             {
                 Location = new Point(this.Location.X, this.Location.Y),
-                indexScenaria = this.indexScenaria
             };
             this.Visible = false;
             nastroikaIgri.ShowDialog();

@@ -11,109 +11,103 @@ namespace Bitva_Polcovodcev
     public class Raschet
     {
 
-        public void SmenaIgroka(List<Igrok> igroki, List<Igrok> igrokiVneIgri,
-            List<Territorii> territorii,
-            ref int indexIgroka,
+        public static void SmenaIgroka(
             ref Label labelNazvanie, ref Label labelOD,
             ref PictureBox pictureFlag, ref PictureBox pictureBrosok, PictureBox pictureKarta,
             Button buttonBrosok, Button buttonHod,
             Panel panelInterfeis,
-            ref Color cvetIgroka,
-            bool zagruzka, int indexScenaria,
-            Bitmap bitKartaTerritorii, ref Bitmap bitKartaIgri,
+            bool zagruzka,
             ref Panel panelMenu, ref Panel panelDeistvia)
         {
 
-            if(!zagruzka || (zagruzka && igroki[indexIgroka].Tip ==  Baza.tip[0]))
+            if(!zagruzka || (zagruzka && Data.igroki[Data.indexIgroka].Tip ==  Baza.tip[0]))
             {
                 while (true)
                 {
-                    if (indexIgroka < igroki.Count - 1) indexIgroka++;
-                    else indexIgroka = 0;
+                    if (Data.indexIgroka < Data.igroki.Count - 1) Data.indexIgroka++;
+                    else Data.indexIgroka = 0;
 
-                    if (igroki[indexIgroka].JivLi && igroki[indexIgroka].Tip != Baza.tip[0]) break;
+                    if (Data.igroki[Data.indexIgroka].JivLi && Data.igroki[Data.indexIgroka].Tip != Baza.tip[0]) break;
                 }
             }
 
-            if (igroki[indexIgroka].Tip == Baza.tip[2])
+            if (Data.igroki[Data.indexIgroka].Tip == Baza.tip[2])
             {
                 IP ip = new IP();
-                ip.Hod(ref igroki, igrokiVneIgri, territorii, ref indexIgroka, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, pictureKarta, labelOD, panelInterfeis);
-                if (igroki.Count > 1) 
+                ip.Hod(pictureKarta, labelOD, panelInterfeis);
+                if (Data.igroki.Count > 1) 
                 { 
-                    if(Data.prisutstvuiutLiJI) SmenaIgroka(igroki, igrokiVneIgri, territorii, ref indexIgroka, ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, ref cvetIgroka, false, indexScenaria, bitKartaTerritorii, ref bitKartaIgri, ref panelMenu, ref panelDeistvia);
+                    if(Data.prisutstvuiutLiJI) SmenaIgroka(ref labelNazvanie, ref labelOD, ref pictureFlag, ref pictureBrosok, pictureKarta, buttonBrosok, buttonHod, panelInterfeis, false, ref panelMenu, ref panelDeistvia);
                 }
             }
 
             Proverka.ProverkaKorrektnostiElementovDatiIFormi(ref panelMenu, ref panelDeistvia);
 
-            if (igroki[indexIgroka].Tip == Baza.tip[1] || !Data.prisutstvuiutLiJI)
+            if (Data.igroki[Data.indexIgroka].Tip == Baza.tip[1] || !Data.prisutstvuiutLiJI)
             {
-                pictureFlag.BackColor = igroki[indexIgroka].Cvet;//Пока такъ, дальше догружать флагъ
-                labelNazvanie.Text = igroki[indexIgroka].Ima;
+                pictureFlag.BackColor = Data.igroki[Data.indexIgroka].Cvet;//Пока такъ, дальше догружать флагъ
+                labelNazvanie.Text = Data.igroki[Data.indexIgroka].Ima;
                 labelNazvanie.Location = new Point(panelInterfeis.Width / 2 - labelNazvanie.Width / 2, pictureFlag.Height + 5);
-                labelOD.Text = "ОД " + igroki[indexIgroka].KolicestvoOD;
+                labelOD.Text = "ОД " + Data.igroki[Data.indexIgroka].KolicestvoOD;
                 labelOD.Location = new Point(panelInterfeis.Width / 2 - labelOD.Width / 2, buttonBrosok.Location.Y + buttonBrosok.Height + 5);
                 pictureBrosok.Image = Properties.Resources.Niet;
                 buttonBrosok.Enabled = true;
                 buttonHod.Enabled = false;
             }
-
-            cvetIgroka = igroki[indexIgroka].Cvet;
         }
 
-        public void Rabota_S_Soseduami_U_Igroka_Poluchivshego(List<Igrok> igroki, List<Territorii> territorii, int indexIgroka, int nomerTerritorii)
+        public static void Rabota_S_Soseduami_U_Igroka_Poluchivshego(int nomerTerritorii)
         {
-            igroki[indexIgroka].PodkontrolnieTerritorii.Add(nomerTerritorii);
-            igroki[indexIgroka].SosediTerritorii.Remove(nomerTerritorii);
+            Data.igroki[Data.indexIgroka].PodkontrolnieTerritorii.Add(nomerTerritorii);
+            Data.igroki[Data.indexIgroka].SosediTerritorii.Remove(nomerTerritorii);
 
             //Работа съ Соседями Территоріями
-            for (int sosediZahvachennoiTerritorii = 0; sosediZahvachennoiTerritorii < territorii[nomerTerritorii].Sosedi.Length; sosediZahvachennoiTerritorii++)
+            for (int sosediZahvachennoiTerritorii = 0; sosediZahvachennoiTerritorii < Data.territorii[nomerTerritorii].Sosedi.Length; sosediZahvachennoiTerritorii++)
             {
-                bool boolVSostaveLiStrani = igroki[indexIgroka].PodkontrolnieTerritorii.Contains(territorii[nomerTerritorii].Sosedi[sosediZahvachennoiTerritorii]);
+                bool boolVSostaveLiStrani = Data.igroki[Data.indexIgroka].PodkontrolnieTerritorii.Contains(Data.territorii[nomerTerritorii].Sosedi[sosediZahvachennoiTerritorii]);
 
-                bool boolZapisanLiUzeVSosedi = igroki[indexIgroka].SosediTerritorii.Contains(territorii[nomerTerritorii].Sosedi[sosediZahvachennoiTerritorii]);
+                bool boolZapisanLiUzeVSosedi = Data.igroki[Data.indexIgroka].SosediTerritorii.Contains(Data.territorii[nomerTerritorii].Sosedi[sosediZahvachennoiTerritorii]);
 
-                if (!boolVSostaveLiStrani && !boolZapisanLiUzeVSosedi) igroki[indexIgroka].SosediTerritorii.Add(territorii[nomerTerritorii].Sosedi[sosediZahvachennoiTerritorii]);
+                if (!boolVSostaveLiStrani && !boolZapisanLiUzeVSosedi) Data.igroki[Data.indexIgroka].SosediTerritorii.Add(Data.territorii[nomerTerritorii].Sosedi[sosediZahvachennoiTerritorii]);
             }
 
             //Работа съ Соседями Игроками
-            for (int territoriiSosedi = 0; territoriiSosedi < igroki[indexIgroka].SosediTerritorii.Count; territoriiSosedi++)
+            for (int territoriiSosedi = 0; territoriiSosedi < Data.igroki[Data.indexIgroka].SosediTerritorii.Count; territoriiSosedi++)
             {
-                int indexVladelcaTerritorii = igroki.FindIndex(list => list.PodkontrolnieTerritorii.Contains(igroki[indexIgroka].SosediTerritorii[territoriiSosedi]));
+                int indexVladelcaTerritorii = Data.igroki.FindIndex(list => list.PodkontrolnieTerritorii.Contains(Data.igroki[Data.indexIgroka].SosediTerritorii[territoriiSosedi]));
 
-                if (!igroki[indexIgroka].SosediIgroki.Contains(igroki[indexVladelcaTerritorii].Nomer)) igroki[indexIgroka].SosediIgroki.Add(igroki[indexVladelcaTerritorii].Nomer);
-                if (!igroki[indexVladelcaTerritorii].SosediIgroki.Contains(igroki[indexIgroka].Nomer)) igroki[indexVladelcaTerritorii].SosediIgroki.Add(igroki[indexIgroka].Nomer);
+                if (!Data.igroki[Data.indexIgroka].SosediIgroki.Contains(Data.igroki[indexVladelcaTerritorii].Nomer)) Data.igroki[Data.indexIgroka].SosediIgroki.Add(Data.igroki[indexVladelcaTerritorii].Nomer);
+                if (!Data.igroki[indexVladelcaTerritorii].SosediIgroki.Contains(Data.igroki[Data.indexIgroka].Nomer)) Data.igroki[indexVladelcaTerritorii].SosediIgroki.Add(Data.igroki[Data.indexIgroka].Nomer);
             }
         }
 
-        public void Rabota_S_Soseduami_U_Igroka_Poteriavsego(List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgroka, int indexIgrokaPoteravshego, int nomerTerritorii)
+        public static void Rabota_S_Soseduami_U_Igroka_Poteriavsego(int indexIgrokaPoteravshego, int nomerTerritorii)
         {
-            igroki[indexIgrokaPoteravshego].PodkontrolnieTerritorii.Remove(nomerTerritorii);
+            Data.igroki[indexIgrokaPoteravshego].PodkontrolnieTerritorii.Remove(nomerTerritorii);
 
-            if (igroki[indexIgrokaPoteravshego].CenaZahvata > 0)
+            if (Data.igroki[indexIgrokaPoteravshego].CenaZahvata > 0)
             {
                 //Работа съ Соседями Территоріями
-                for (int sosediPoterannoiTerritorii = 0; sosediPoterannoiTerritorii < territorii[nomerTerritorii].Sosedi.Length; sosediPoterannoiTerritorii++)
+                for (int sosediPoterannoiTerritorii = 0; sosediPoterannoiTerritorii < Data.territorii[nomerTerritorii].Sosedi.Length; sosediPoterannoiTerritorii++)
                 {
-                    bool uavlaetsaLiTerritoriaChastiuPolitii = igroki[indexIgrokaPoteravshego].PodkontrolnieTerritorii.Contains(territorii[nomerTerritorii].Sosedi[sosediPoterannoiTerritorii]);
+                    bool uavlaetsaLiTerritoriaChastiuPolitii = Data.igroki[indexIgrokaPoteravshego].PodkontrolnieTerritorii.Contains(Data.territorii[nomerTerritorii].Sosedi[sosediPoterannoiTerritorii]);
 
-                    if (uavlaetsaLiTerritoriaChastiuPolitii && !igroki[indexIgrokaPoteravshego].SosediTerritorii.Contains(nomerTerritorii))
+                    if (uavlaetsaLiTerritoriaChastiuPolitii && !Data.igroki[indexIgrokaPoteravshego].SosediTerritorii.Contains(nomerTerritorii))
                     {
-                        igroki[indexIgrokaPoteravshego].SosediTerritorii.Add(nomerTerritorii);
+                        Data.igroki[indexIgrokaPoteravshego].SosediTerritorii.Add(nomerTerritorii);
                     }
                     else if (!uavlaetsaLiTerritoriaChastiuPolitii)
                     {
                         bool immetGranicuSTerritorieuPolitii = true;
 
-                        for (int territoriaFrakcii = 0; territoriaFrakcii < igroki[indexIgrokaPoteravshego].PodkontrolnieTerritorii.Count; territoriaFrakcii++)
+                        for (int territoriaFrakcii = 0; territoriaFrakcii < Data.igroki[indexIgrokaPoteravshego].PodkontrolnieTerritorii.Count; territoriaFrakcii++)
                         {
-                            immetGranicuSTerritorieuPolitii = territorii[igroki[indexIgrokaPoteravshego].PodkontrolnieTerritorii[territoriaFrakcii]].Sosedi.Contains(territorii[nomerTerritorii].Sosedi[sosediPoterannoiTerritorii]);
+                            immetGranicuSTerritorieuPolitii = Data.territorii[Data.igroki[indexIgrokaPoteravshego].PodkontrolnieTerritorii[territoriaFrakcii]].Sosedi.Contains(Data.territorii[nomerTerritorii].Sosedi[sosediPoterannoiTerritorii]);
 
                             if (immetGranicuSTerritorieuPolitii) break;
                         }
 
-                        if (!immetGranicuSTerritorieuPolitii) igroki[indexIgrokaPoteravshego].SosediTerritorii.Remove(territorii[nomerTerritorii].Sosedi[sosediPoterannoiTerritorii]);
+                        if (!immetGranicuSTerritorieuPolitii) Data.igroki[indexIgrokaPoteravshego].SosediTerritorii.Remove(Data.territorii[nomerTerritorii].Sosedi[sosediPoterannoiTerritorii]);
                     }
 
                 }
@@ -122,80 +116,80 @@ namespace Bitva_Polcovodcev
 
                 List<int> spisokBivsihSosedeiIgrokov = new List<int>();
 
-                for (int ninesnieSosedi = 0; ninesnieSosedi < igroki[indexIgrokaPoteravshego].SosediIgroki.Count; ninesnieSosedi++)
+                for (int ninesnieSosedi = 0; ninesnieSosedi < Data.igroki[indexIgrokaPoteravshego].SosediIgroki.Count; ninesnieSosedi++)
                 {
-                    int indexSoseda = igroki.FindIndex(list => int.Equals(list.Nomer, igroki[indexIgrokaPoteravshego].SosediIgroki[ninesnieSosedi]));
+                    int indexSoseda = Data.igroki.FindIndex(list => int.Equals(list.Nomer, Data.igroki[indexIgrokaPoteravshego].SosediIgroki[ninesnieSosedi]));
 
                     bool estLiTerritoriaVSostave = false;
 
-                    for (int territoriiSosedi = 0; territoriiSosedi < igroki[indexIgrokaPoteravshego].SosediTerritorii.Count; territoriiSosedi++)
+                    for (int territoriiSosedi = 0; territoriiSosedi < Data.igroki[indexIgrokaPoteravshego].SosediTerritorii.Count; territoriiSosedi++)
                     {
-                        int indexTerritorii = territorii.FindIndex(list => int.Equals(list.Nomer, igroki[indexIgrokaPoteravshego].SosediTerritorii[territoriiSosedi]));
+                        int indexTerritorii = Data.territorii.FindIndex(list => int.Equals(list.Nomer, Data.igroki[indexIgrokaPoteravshego].SosediTerritorii[territoriiSosedi]));
 
-                        estLiTerritoriaVSostave = igroki[indexSoseda].PodkontrolnieTerritorii.Contains(territorii[indexTerritorii].Nomer);
+                        estLiTerritoriaVSostave = Data.igroki[indexSoseda].PodkontrolnieTerritorii.Contains(Data.territorii[indexTerritorii].Nomer);
 
                         if (estLiTerritoriaVSostave) break;
                     }
 
                     if (!estLiTerritoriaVSostave)
                     {
-                        spisokBivsihSosedeiIgrokov.Add(igroki[indexIgrokaPoteravshego].SosediIgroki[ninesnieSosedi]);
+                        spisokBivsihSosedeiIgrokov.Add(Data.igroki[indexIgrokaPoteravshego].SosediIgroki[ninesnieSosedi]);
                     }
 
                 }
 
                 for (int bivshiSosedIgrok = 0; bivshiSosedIgrok < spisokBivsihSosedeiIgrokov.Count; bivshiSosedIgrok++)
                 {
-                    igroki[indexIgrokaPoteravshego].SosediIgroki.Remove(spisokBivsihSosedeiIgrokov[bivshiSosedIgrok]);
-                    igroki[igroki.FindIndex(igrok => int.Equals(igrok.Nomer, spisokBivsihSosedeiIgrokov[bivshiSosedIgrok]))].SosediIgroki.Remove(igroki[indexIgrokaPoteravshego].Nomer);
+                    Data.igroki[indexIgrokaPoteravshego].SosediIgroki.Remove(spisokBivsihSosedeiIgrokov[bivshiSosedIgrok]);
+                    Data.igroki[Data.igroki.FindIndex(igrok => int.Equals(igrok.Nomer, spisokBivsihSosedeiIgrokov[bivshiSosedIgrok]))].SosediIgroki.Remove(Data.igroki[indexIgrokaPoteravshego].Nomer);
                 }
 
             }
             else
             {
-                igroki[indexIgrokaPoteravshego].SosediTerritorii.Clear();
+                Data.igroki[indexIgrokaPoteravshego].SosediTerritorii.Clear();
 
-                for (int i = 0; i < igroki[indexIgrokaPoteravshego].SosediIgroki.Count; i++)
+                for (int i = 0; i < Data.igroki[indexIgrokaPoteravshego].SosediIgroki.Count; i++)
                 {
-                    int indexSoseda = igroki.FindIndex(igrok => int.Equals(igrok.Nomer, igroki[indexIgrokaPoteravshego].SosediIgroki[i]));
+                    int indexSoseda = Data.igroki.FindIndex(igrok => int.Equals(igrok.Nomer, Data.igroki[indexIgrokaPoteravshego].SosediIgroki[i]));
 
-                    if (igroki[indexSoseda].SosediIgroki.Contains(igroki[indexIgrokaPoteravshego].Nomer)) igroki[indexSoseda].SosediIgroki.Remove(igroki[indexIgrokaPoteravshego].Nomer);
+                    if (Data.igroki[indexSoseda].SosediIgroki.Contains(Data.igroki[indexIgrokaPoteravshego].Nomer)) Data.igroki[indexSoseda].SosediIgroki.Remove(Data.igroki[indexIgrokaPoteravshego].Nomer);
                 }
 
-                igroki[indexIgrokaPoteravshego].SosediIgroki.Clear();
-                igroki[indexIgrokaPoteravshego].JivLi = false;
+                Data.igroki[indexIgrokaPoteravshego].SosediIgroki.Clear();
+                Data.igroki[indexIgrokaPoteravshego].JivLi = false;
 
-                int nomerIgroka = igroki[indexIgroka].Nomer;
+                int nomerIgroka = Data.igroki[Data.indexIgroka].Nomer;
 
-                if (igroki[indexIgrokaPoteravshego].Tip == Baza.tip[0]) Data.kolichestvoNI--;
-                else if (igroki[indexIgrokaPoteravshego].Tip == Baza.tip[1]) Data.kolichestvoJI--;
-                else if (igroki[indexIgrokaPoteravshego].Tip == Baza.tip[2]) Data.kolichestvoIP--;
+                if (Data.igroki[indexIgrokaPoteravshego].Tip == Baza.tip[0]) Data.kolichestvoNI--;
+                else if (Data.igroki[indexIgrokaPoteravshego].Tip == Baza.tip[1]) Data.kolichestvoJI--;
+                else if (Data.igroki[indexIgrokaPoteravshego].Tip == Baza.tip[2]) Data.kolichestvoIP--;
 
                 if (Data.kolichestvoJI == 0) Data.prisutstvuiutLiJI = false;
 
-                igrokiVneIgri.Add(igroki[indexIgrokaPoteravshego]);
-                igroki.Remove(igroki[indexIgrokaPoteravshego]);
+                Data.igrokiVneIgri.Add(Data.igroki[indexIgrokaPoteravshego]);
+                Data.igroki.Remove(Data.igroki[indexIgrokaPoteravshego]);
 
-                Proverka.ProverkaPolojeniaIndexaIgroka(igroki, ref indexIgroka, nomerIgroka);
+                Proverka.ProverkaPolojeniaIndexaIgroka(nomerIgroka);
 
             }
         }
 
-        public void Pocrass(List<Igrok> igroki, List<Igrok> igrokiVneIgri, List<Territorii> territorii, ref int indexIgrok, int nomerTerritoriiPoteri)
+        public static void Pocrass(int nomerTerritoriiPoteri)
         {
-            int indexIgrokaDlaLambdi = indexIgrok;
+            int indexIgrokaDlaLambdi = Data.indexIgroka;
 
-            int indexIgrokaPoteravshego = igroki.FindIndex(list => list.PodkontrolnieTerritorii.Contains(nomerTerritoriiPoteri) && list.Nomer != igroki[indexIgrokaDlaLambdi].Nomer);
+            int indexIgrokaPoteravshego = Data.igroki.FindIndex(list => list.PodkontrolnieTerritorii.Contains(nomerTerritoriiPoteri) && list.Nomer != Data.igroki[indexIgrokaDlaLambdi].Nomer);
 
-            igroki[indexIgrok].KolicestvoOD -= Baza.cenaZahvataTerritorii;
-            igroki[indexIgrok].CenaZahvata += Baza.cenaZahvataTerritorii;
-            igroki[indexIgrokaPoteravshego].CenaZahvata -= Baza.cenaZahvataTerritorii;
+            Data.igroki[Data.indexIgroka].KolicestvoOD -= Baza.cenaZahvataTerritorii;
+            Data.igroki[Data.indexIgroka].CenaZahvata += Baza.cenaZahvataTerritorii;
+            Data.igroki[indexIgrokaPoteravshego].CenaZahvata -= Baza.cenaZahvataTerritorii;
 
-            igroki[indexIgrok].SosediIgroki.Remove(igroki[indexIgrokaPoteravshego].Nomer);
+            Data.igroki[Data.indexIgroka].SosediIgroki.Remove(Data.igroki[indexIgrokaPoteravshego].Nomer);
 
-            Rabota_S_Soseduami_U_Igroka_Poluchivshego(igroki, territorii, indexIgrok, nomerTerritoriiPoteri);
+            Rabota_S_Soseduami_U_Igroka_Poluchivshego(nomerTerritoriiPoteri);
 
-            Rabota_S_Soseduami_U_Igroka_Poteriavsego(igroki, igrokiVneIgri, territorii, ref indexIgrok, indexIgrokaPoteravshego, nomerTerritoriiPoteri);
+            Rabota_S_Soseduami_U_Igroka_Poteriavsego(indexIgrokaPoteravshego, nomerTerritoriiPoteri);
 
         }
     }

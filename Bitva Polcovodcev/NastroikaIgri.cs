@@ -14,8 +14,6 @@ namespace Bitva_Polcovodcev
             InitializeComponent();
         }
 
-        public int indexScenaria;
-        public List<Igrok> igroki;
         List<Igrok> igrokiDlaRedactirovania;
         Panel[] panelniElement;
         Button[] buttonskiVerch, buttonskiNiz;
@@ -24,11 +22,11 @@ namespace Bitva_Polcovodcev
 
         private void NastroikaIgri_Load(object sender, EventArgs e)
         {
-            Zagruzka.Deserelizacia_IgrokData(ref igroki, Baza.scenarii[indexScenaria, 4]);
+            Zagruzka.Deserelizacia_IgrokData(ref Data.igroki, Baza.scenarii[Data.indexScenaria, 4]);
 
-            Zagruzka.Deserelizacia_IgrokData(ref igrokiDlaRedactirovania, Baza.scenarii[indexScenaria, 4]);
+            Zagruzka.Deserelizacia_IgrokData(ref igrokiDlaRedactirovania, Baza.scenarii[Data.indexScenaria, 4]);
 
-            Proverka.ProverkaTipovIgrokov(ref Data.kolichestvoJI, ref Data.kolichestvoIP, ref Data.kolichestvoNI, igroki);
+            Proverka.ProverkaTipovIgrokov(ref Data.kolichestvoJI, ref Data.kolichestvoIP, ref Data.kolichestvoNI);
 
             ZagruzkaElementovFormiNastroikiIgri();
         }
@@ -129,8 +127,8 @@ namespace Bitva_Polcovodcev
 
             for (int i = 0; i < igrokiDlaRedactirovania.Count; i++)
             {
-                if (igrokiDlaRedactirovania[i].Nomer != igroki[i].Nomer 
-                    || igrokiDlaRedactirovania[i].Tip != igroki[i].Tip) dannieShozi = false;
+                if (igrokiDlaRedactirovania[i].Nomer != Data.igroki[i].Nomer 
+                    || igrokiDlaRedactirovania[i].Tip != Data.igroki[i].Tip) dannieShozi = false;
             }
 
             if (dannieShozi)
@@ -288,7 +286,7 @@ namespace Bitva_Polcovodcev
 
         private void PrimenitIzmenenia_Click(object sender, EventArgs e)
         {
-            igroki = new List<Igrok> (igrokiDlaRedactirovania);
+            Data.igroki = new List<Igrok> (igrokiDlaRedactirovania);
             primenitIzmenenia.Enabled = false;
         }
 
@@ -298,18 +296,16 @@ namespace Bitva_Polcovodcev
             {
                 DialogResult otvet = MessageBox.Show("Не желаете ли передъ началомъ игры примѣнить измѣненія?", "Работа съ Данными", MessageBoxButtons.YesNo);
 
-                if(otvet == DialogResult.Yes) igroki = new List<Igrok>(igrokiDlaRedactirovania);
+                if(otvet == DialogResult.Yes) Data.igroki = new List<Igrok>(igrokiDlaRedactirovania);
             }
 
-            if (Data.kolichestvoNI + Data.kolichestvoJI + Data.kolichestvoIP != igroki.Count) Proverka.ProverkaTipovIgrokov(ref Data.kolichestvoJI, ref Data.kolichestvoIP, ref Data.kolichestvoNI, igroki);
+            if (Data.kolichestvoNI + Data.kolichestvoJI + Data.kolichestvoIP != Data.igroki.Count) Proverka.ProverkaTipovIgrokov(ref Data.kolichestvoJI, ref Data.kolichestvoIP, ref Data.kolichestvoNI);
 
             if (Data.kolichestvoJI > 0) Data.prisutstvuiutLiJI = true;
 
             igra = new Igra
             {
                 Location = new Point(this.Location.X, this.Location.Y),
-                indexScenaria = this.indexScenaria,
-                igroki = this.igroki
             };
             this.Visible = false;
             igra.ShowDialog();
@@ -319,7 +315,7 @@ namespace Bitva_Polcovodcev
 
         private void SohranitIzmenenia_Click(object sender, EventArgs e)
         {
-            Zagruzka.Sohranenie_IgrokData(igrokiDlaRedactirovania, Baza.scenarii[indexScenaria, 4]);
+            Zagruzka.Sohranenie_IgrokData(igrokiDlaRedactirovania, Baza.scenarii[Data.indexScenaria, 4]);
             sohranitIzmenenia.Enabled = false;
         }
     }

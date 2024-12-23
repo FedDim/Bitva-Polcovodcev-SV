@@ -3,7 +3,7 @@
 
 namespace Bitva_Polcovodcev
 {
-    public class Territorii
+    public class Territoria
     {
         public int Nomer { get; set; }
         public int X { get; set; }

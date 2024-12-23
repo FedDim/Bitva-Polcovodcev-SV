@@ -16,20 +16,20 @@ namespace Bitva_Polcovodcev
             Data.panelMenu = panelMenu;
         }
 
-        public static void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form, int indexScenaria)
+        public static void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Panel panelInterfeis, Form form)
         {
-            pictureKarta.Height = BitKartaIgri.Height;
-            pictureKarta.Width = BitKartaIgri.Width;
+            pictureKarta.Height = Data.bitKartaIgri.Height;
+            pictureKarta.Width = Data.bitKartaIgri.Width;
 
-            pictureKarta.Image = BitKartaIgri;
+            pictureKarta.Image = Data.bitKartaIgri;
 
             panelInterfeis.Location = new Point(pictureKarta.Width, 0);
-            panelInterfeis.Height = BitKartaIgri.Height;
+            panelInterfeis.Height = Data.bitKartaIgri.Height;
 
             form.Height = pictureKarta.Height + 38;
             form.Width = pictureKarta.Width + panelInterfeis.Width + 16;
 
-            form.Text = Baza.scenarii[indexScenaria, 0];
+            form.Text = Baza.scenarii[Data.indexScenaria, 0];
         }
 
         public static void ZagruzkaElementovFormiDlaIgroka(PictureBox pictureFlag, PictureBox pictureBrosok, Label labelNazvanie, Label labelOD, Button buttonBrosok, Button buttonHod, Panel panelInterfeis)
@@ -65,11 +65,11 @@ namespace Bitva_Polcovodcev
             }
         }
 
-        public static void Deserelizacia_TerritoriiData(ref List<Territorii> territorii, string nazvanie)
+        public static void Deserelizacia_TerritoriiData(ref List<Territoria> territorii, string nazvanie)
         {
             try
             {
-                territorii = JsonConvert.DeserializeObject<List<Territorii>>(File.ReadAllText(nazvanie));
+                territorii = JsonConvert.DeserializeObject<List<Territoria>>(File.ReadAllText(nazvanie));
             }
             catch
             {
@@ -90,7 +90,7 @@ namespace Bitva_Polcovodcev
             }
         }
 
-        public static void Sohranenie_IgrokTerritorii(List<Territorii> territorii, string nazvanie)
+        public static void Sohranenie_IgrokTerritorii(List<Territoria> territorii, string nazvanie)
         {
             try
             {
@@ -102,22 +102,18 @@ namespace Bitva_Polcovodcev
             }
         }
 
-        public static void ZagruzkaBitmapKart(int indexScenaria, ref Bitmap kartaIgrokov, ref Bitmap kartaTerritorii)
+        public static Bitmap ZagruzkaBitmapKarti(string kartaTip)
         {
-            switch (indexScenaria)
+            //Улучшить проверку
+            switch (kartaTip)
             {
-                case 0:
-                    kartaIgrokov = Properties.Resources.Proba_Igroki;
-                    kartaTerritorii = Properties.Resources.Proba_Territorii;
-                    break;
-                case 1:
-                    kartaIgrokov = Properties.Resources.BitvaZaOstrov_Igroki;
-                    kartaTerritorii = Properties.Resources.BitvaZaOstrov_Territorii;
-                    break;
-                default:
-
-                    break;
+                case "Карта Политій":
+                    return Data.indexScenaria == 1 ? Properties.Resources.BitvaZaOstrov_Igroki : Properties.Resources.Proba_Igroki;
+                case "Карта Территорій":
+                    return Data.indexScenaria == 1 ? Properties.Resources.BitvaZaOstrov_Territorii : Properties.Resources.Proba_Territorii;
             }
+
+            return null;
         }
     }
 }
