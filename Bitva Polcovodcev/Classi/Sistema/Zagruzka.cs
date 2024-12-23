@@ -9,27 +9,20 @@ namespace Bitva_Polcovodcev
 {
     public class Zagruzka
     {
-        public static void ZagruzkaElementovFormiDlaData(Form form, Panel panelDeistvie, Panel panelMenu)
-        {
-            Data.Igra = form;
-            Data.panelDeistvie = panelDeistvie;
-            Data.panelMenu = panelMenu;
-        }
-
         public static void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Panel panelInterfeis, Form form)
         {
-            pictureKarta.Height = Data.bitKartaIgri.Height;
-            pictureKarta.Width = Data.bitKartaIgri.Width;
+            pictureKarta.Height = Дата.bitKartaIgri.Height;
+            pictureKarta.Width = Дата.bitKartaIgri.Width;
 
-            pictureKarta.Image = Data.bitKartaIgri;
+            pictureKarta.Image = Дата.bitKartaIgri;
 
             panelInterfeis.Location = new Point(pictureKarta.Width, 0);
-            panelInterfeis.Height = Data.bitKartaIgri.Height;
+            panelInterfeis.Height = Дата.bitKartaIgri.Height;
 
             form.Height = pictureKarta.Height + 38;
             form.Width = pictureKarta.Width + panelInterfeis.Width + 16;
 
-            form.Text = Baza.scenarii[Data.indexScenaria, 0];
+            form.Text = Baza.scenarii[Дата.indexScenaria, 0];
         }
 
         public static void ZagruzkaElementovFormiDlaIgroka(PictureBox pictureFlag, PictureBox pictureBrosok, Label labelNazvanie, Label labelOD, Button buttonBrosok, Button buttonHod, Panel panelInterfeis)
@@ -73,7 +66,7 @@ namespace Bitva_Polcovodcev
             }
             catch
             {
-                MessageBox.Show("Файлъ: "+ nazvanie + " не обнаруженъ" );
+                MessageBox.Show("Файлъ: " + nazvanie + " не обнаруженъ");
             }
         }
 
@@ -108,9 +101,9 @@ namespace Bitva_Polcovodcev
             switch (kartaTip)
             {
                 case "Карта Политій":
-                    return Data.indexScenaria == 1 ? Properties.Resources.BitvaZaOstrov_Igroki : Properties.Resources.Proba_Igroki;
+                    return Дата.indexScenaria == 1 ? Properties.Resources.BitvaZaOstrov_Igroki : Properties.Resources.Proba_Igroki;
                 case "Карта Территорій":
-                    return Data.indexScenaria == 1 ? Properties.Resources.BitvaZaOstrov_Territorii : Properties.Resources.Proba_Territorii;
+                    return Дата.indexScenaria == 1 ? Properties.Resources.BitvaZaOstrov_Territorii : Properties.Resources.Proba_Territorii;
             }
 
             return null;

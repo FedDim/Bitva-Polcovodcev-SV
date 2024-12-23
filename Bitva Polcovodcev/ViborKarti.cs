@@ -30,9 +30,9 @@ namespace Bitva_Polcovodcev
         public void Vibor_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            Data.indexScenaria = Convert.ToInt32(btn.Tag);
+            Дата.indexScenaria = Convert.ToInt32(btn.Tag);
 
-            switch (Data.indexScenaria)
+            switch (Дата.indexScenaria)
             {
                 case 0:
                     kartina.Image = Properties.Resources.Proba_Igroki;
@@ -42,10 +42,10 @@ namespace Bitva_Polcovodcev
                     break;
             }
 
-            nazvanie.Text = "Названіе: " + Baza.scenarii[Data.indexScenaria, 0];
-            cenaZahvata.Text = "Цѣна Захвата: " + Baza.scenarii[Data.indexScenaria, 1];
-            kolichestvoTerritorii.Text = "Количество Территорій: " + Baza.scenarii[Data.indexScenaria, 2];
-            kolichestvoIgrokov.Text = "Количество Возможных Игроковъ: " + Baza.scenarii[Data.indexScenaria, 3];
+            nazvanie.Text = "Названіе: " + Baza.scenarii[Дата.indexScenaria, 0];
+            cenaZahvata.Text = "Цѣна Захвата: " + Baza.scenarii[Дата.indexScenaria, 1];
+            kolichestvoTerritorii.Text = "Количество Территорій: " + Baza.scenarii[Дата.indexScenaria, 2];
+            kolichestvoIgrokov.Text = "Количество Возможных Игроковъ: " + Baza.scenarii[Дата.indexScenaria, 3];
 
             if (karta.Visible == false) karta.Visible = true;
         }

@@ -22,11 +22,11 @@ namespace Bitva_Polcovodcev
 
         private void NastroikaIgri_Load(object sender, EventArgs e)
         {
-            Zagruzka.Deserelizacia_IgrokData(ref Data.igroki, Baza.scenarii[Data.indexScenaria, 4]);
+            Zagruzka.Deserelizacia_IgrokData(ref Дата.igroki, Baza.scenarii[Дата.indexScenaria, 4]);
 
-            Zagruzka.Deserelizacia_IgrokData(ref igrokiDlaRedactirovania, Baza.scenarii[Data.indexScenaria, 4]);
+            Zagruzka.Deserelizacia_IgrokData(ref igrokiDlaRedactirovania, Baza.scenarii[Дата.indexScenaria, 4]);
 
-            Proverka.ProverkaTipovIgrokov(ref Data.kolichestvoJI, ref Data.kolichestvoIP, ref Data.kolichestvoNI);
+            Proverka.ProverkaTipovIgrokov(ref Дата.kolichestvoJI, ref Дата.kolichestvoIP, ref Дата.kolichestvoNI);
 
             ZagruzkaElementovFormiNastroikiIgri();
         }
@@ -101,18 +101,18 @@ namespace Bitva_Polcovodcev
             {
                 case "Нулевой Игрокъ":
                     btn.Text = "Живой Игрокъ";
-                    Data.kolichestvoNI--;
-                    Data.kolichestvoJI++;
+                    Дата.kolichestvoNI--;
+                    Дата.kolichestvoJI++;
                     break;
                 case "Живой Игрокъ":
                     btn.Text = "Искусственный Противникъ";
-                    Data.kolichestvoJI--;
-                    Data.kolichestvoIP++;
+                    Дата.kolichestvoJI--;
+                    Дата.kolichestvoIP++;
                     break;
                 case "Искусственный Противникъ":
                     btn.Text = "Нулевой Игрокъ";
-                    Data.kolichestvoIP--;
-                    Data.kolichestvoNI++;
+                    Дата.kolichestvoIP--;
+                    Дата.kolichestvoNI++;
                     break;
             }
 
@@ -127,8 +127,8 @@ namespace Bitva_Polcovodcev
 
             for (int i = 0; i < igrokiDlaRedactirovania.Count; i++)
             {
-                if (igrokiDlaRedactirovania[i].Nomer != Data.igroki[i].Nomer 
-                    || igrokiDlaRedactirovania[i].Tip != Data.igroki[i].Tip) dannieShozi = false;
+                if (igrokiDlaRedactirovania[i].Nomer != Дата.igroki[i].Nomer 
+                    || igrokiDlaRedactirovania[i].Tip != Дата.igroki[i].Tip) dannieShozi = false;
             }
 
             if (dannieShozi)
@@ -286,7 +286,7 @@ namespace Bitva_Polcovodcev
 
         private void PrimenitIzmenenia_Click(object sender, EventArgs e)
         {
-            Data.igroki = new List<Igrok> (igrokiDlaRedactirovania);
+            Дата.igroki = new List<Igrok> (igrokiDlaRedactirovania);
             primenitIzmenenia.Enabled = false;
         }
 
@@ -296,12 +296,12 @@ namespace Bitva_Polcovodcev
             {
                 DialogResult otvet = MessageBox.Show("Не желаете ли передъ началомъ игры примѣнить измѣненія?", "Работа съ Данными", MessageBoxButtons.YesNo);
 
-                if(otvet == DialogResult.Yes) Data.igroki = new List<Igrok>(igrokiDlaRedactirovania);
+                if(otvet == DialogResult.Yes) Дата.igroki = new List<Igrok>(igrokiDlaRedactirovania);
             }
 
-            if (Data.kolichestvoNI + Data.kolichestvoJI + Data.kolichestvoIP != Data.igroki.Count) Proverka.ProverkaTipovIgrokov(ref Data.kolichestvoJI, ref Data.kolichestvoIP, ref Data.kolichestvoNI);
+            if (Дата.kolichestvoNI + Дата.kolichestvoJI + Дата.kolichestvoIP != Дата.igroki.Count) Proverka.ProverkaTipovIgrokov(ref Дата.kolichestvoJI, ref Дата.kolichestvoIP, ref Дата.kolichestvoNI);
 
-            if (Data.kolichestvoJI > 0) Data.prisutstvuiutLiJI = true;
+            if (Дата.kolichestvoJI > 0) Дата.prisutstvuiutLiJI = true;
 
             igra = new Igra
             {
@@ -315,7 +315,7 @@ namespace Bitva_Polcovodcev
 
         private void SohranitIzmenenia_Click(object sender, EventArgs e)
         {
-            Zagruzka.Sohranenie_IgrokData(igrokiDlaRedactirovania, Baza.scenarii[Data.indexScenaria, 4]);
+            Zagruzka.Sohranenie_IgrokData(igrokiDlaRedactirovania, Baza.scenarii[Дата.indexScenaria, 4]);
             sohranitIzmenenia.Enabled = false;
         }
     }

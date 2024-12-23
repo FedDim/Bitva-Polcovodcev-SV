@@ -160,9 +160,9 @@
             // 
             this.panelDeistvie.Controls.Add(this.panelPobeda);
             this.panelDeistvie.Controls.Add(this.panelMenu);
-            this.panelDeistvie.Location = new System.Drawing.Point(54, 33);
+            this.panelDeistvie.Location = new System.Drawing.Point(0, 33);
             this.panelDeistvie.Name = "panelDeistvie";
-            this.panelDeistvie.Size = new System.Drawing.Size(769, 414);
+            this.panelDeistvie.Size = new System.Drawing.Size(721, 414);
             this.panelDeistvie.TabIndex = 1;
             this.panelDeistvie.Visible = false;
             this.panelDeistvie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PanelDeistvie_MouseDown);
