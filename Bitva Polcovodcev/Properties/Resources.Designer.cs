@@ -63,6 +63,26 @@ namespace Bitva_Polcovodcev.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BitvaZaOstrov_Igroki {
+            get {
+                object obj = ResourceManager.GetObject("BitvaZaOstrov_Igroki", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BitvaZaOstrov_Territorii {
+            get {
+                object obj = ResourceManager.GetObject("BitvaZaOstrov_Territorii", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Chest {
             get {
                 object obj = ResourceManager.GetObject("Chest", resourceCulture);

@@ -9,23 +9,30 @@ namespace Bitva_Polcovodcev
 {
     public class Zagruzka
     {
-        Dannie dannie = new Dannie();
-
-        public void ZagruzkaElementovFormi(PictureBox pictureKarta, Bitmap BitKartaIgri, Panel panelInterfeis, Form form)
+        public static void ZagruzkaElementovFormiDlaData(Form form, Panel panelDeistvie, Panel panelMenu)
         {
-            pictureKarta.Height = BitKartaIgri.Height;
-            pictureKarta.Width = BitKartaIgri.Width;
+            Data.Igra = form;
+            Data.panelDeistvie = panelDeistvie;
+            Data.panelMenu = panelMenu;
+        }
+
+        public static void ZagruzkaElementovFormiIgra(PictureBox pictureKarta, Panel panelInterfeis, Form form)
+        {
+            pictureKarta.Height = Data.bitKartaIgri.Height;
+            pictureKarta.Width = Data.bitKartaIgri.Width;
+
+            pictureKarta.Image = Data.bitKartaIgri;
 
             panelInterfeis.Location = new Point(pictureKarta.Width, 0);
-            panelInterfeis.Height = BitKartaIgri.Height;
+            panelInterfeis.Height = Data.bitKartaIgri.Height;
 
             form.Height = pictureKarta.Height + 38;
             form.Width = pictureKarta.Width + panelInterfeis.Width + 16;
 
-            form.Text = dannie.imaScenaria;
+            form.Text = Baza.scenarii[Data.indexScenaria, 0];
         }
 
-        public void ZagruzkaElementovFormiDlaIgroka(PictureBox pictureFlag, PictureBox pictureBrosok, Label labelNazvanie, Label labelOD, Button buttonBrosok, Button buttonHod, Panel panelInterfeis)
+        public static void ZagruzkaElementovFormiDlaIgroka(PictureBox pictureFlag, PictureBox pictureBrosok, Label labelNazvanie, Label labelOD, Button buttonBrosok, Button buttonHod, Panel panelInterfeis)
         {
             pictureFlag.Width = panelInterfeis.Width;
             pictureFlag.Height = panelInterfeis.Height / 4;
@@ -46,16 +53,67 @@ namespace Bitva_Polcovodcev
             buttonHod.Location = new Point(0, labelOD.Location.Y + labelOD.Height + 5);
         }
 
-        public void Deserelizacia_IgrokData(ref List<Igrok> listClassIgrok)
+        public static void Deserelizacia_IgrokData(ref List<Igrok> igroki, string nazvanie)
         {
-            var file = File.ReadAllText("IgrokData_Proba.json");
-            listClassIgrok = JsonConvert.DeserializeObject<List<Igrok>>(file);
+            try
+            {
+                igroki = JsonConvert.DeserializeObject<List<Igrok>>(File.ReadAllText(nazvanie));
+            }
+            catch
+            {
+                MessageBox.Show("Файлъ: " + nazvanie + " не обнаруженъ");
+            }
         }
 
-        public void Deserelizacia_TerritoriiData(ref List<Territorii> listClassTerritorii)
+        public static void Deserelizacia_TerritoriiData(ref List<Territoria> territorii, string nazvanie)
         {
-            var file = File.ReadAllText("TerritoriiData_Proba.json");
-            listClassTerritorii = JsonConvert.DeserializeObject<List<Territorii>>(file);
+            try
+            {
+                territorii = JsonConvert.DeserializeObject<List<Territoria>>(File.ReadAllText(nazvanie));
+            }
+            catch
+            {
+                MessageBox.Show("Файлъ: "+ nazvanie + " не обнаруженъ" );
+            }
+        }
+
+        public static void Sohranenie_IgrokData(List<Igrok> igroki, string nazvanie)
+        {
+            try
+            {
+                File.WriteAllText(nazvanie, JsonConvert.SerializeObject(igroki));
+                MessageBox.Show("Данные сохранены");
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка: " + nazvanie);
+            }
+        }
+
+        public static void Sohranenie_IgrokTerritorii(List<Territoria> territorii, string nazvanie)
+        {
+            try
+            {
+                File.WriteAllText(nazvanie, JsonConvert.SerializeObject(territorii));
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка: " + nazvanie);
+            }
+        }
+
+        public static Bitmap ZagruzkaBitmapKarti(string kartaTip)
+        {
+            //Улучшить проверку
+            switch (kartaTip)
+            {
+                case "Карта Политій":
+                    return Data.indexScenaria == 1 ? Properties.Resources.BitvaZaOstrov_Igroki : Properties.Resources.Proba_Igroki;
+                case "Карта Территорій":
+                    return Data.indexScenaria == 1 ? Properties.Resources.BitvaZaOstrov_Territorii : Properties.Resources.Proba_Territorii;
+            }
+
+            return null;
         }
     }
 }
